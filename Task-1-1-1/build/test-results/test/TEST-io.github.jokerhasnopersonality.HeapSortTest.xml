@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="io.github.jokerhasnopersonality.HeapSortTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2022-09-17T16:03:50" hostname="LAPTOP-EKI79AE8" time="0.058">
+  <properties/>
+  <testcase name="simple_test()" classname="io.github.jokerhasnopersonality.HeapSortTest" time="0.047"/>
+  <testcase name="part_sorted_test()" classname="io.github.jokerhasnopersonality.HeapSortTest" time="0.001"/>
+  <testcase name="test0()" classname="io.github.jokerhasnopersonality.HeapSortTest" time="0.001"/>
+  <testcase name="test1()" classname="io.github.jokerhasnopersonality.HeapSortTest" time="0.001"/>
+  <testcase name="equal_test()" classname="io.github.jokerhasnopersonality.HeapSortTest" time="0.001"/>
+  <testcase name="sorted_test()" classname="io.github.jokerhasnopersonality.HeapSortTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
