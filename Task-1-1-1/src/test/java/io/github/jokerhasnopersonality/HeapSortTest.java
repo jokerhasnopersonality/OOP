@@ -6,6 +6,9 @@ import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
+/**
+ * Tests to check HeapSort algorithm.
+ */
 public class HeapSortTest {
     @Test
     public void test0(){
