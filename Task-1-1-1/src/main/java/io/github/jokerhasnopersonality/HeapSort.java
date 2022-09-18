@@ -27,13 +27,13 @@ public class HeapSort {
         int l = arr.length;
         int[] newArr = new int[l];
         int cnt = 0;
-        for(int i = 0; i < l; i++) {
+        for (int i = 0; i < l; i++) {
             newArr[cnt] = arr[i];
             siftup(newArr, cnt);
             cnt++;
         }
         int res;
-        for(int i = 0; i < l; i++) {
+        for (int i = 0; i < l; i++) {
             res = newArr[0];
             swap(newArr, 0, cnt - 1);
             cnt--;
