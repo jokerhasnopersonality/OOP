@@ -1,9 +1,9 @@
 package io.github.jokerhasnopersonality;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static io.github.jokerhasnopersonality.HeapSort.heapsort;
-import java.util.Arrays;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
+import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 
 /**

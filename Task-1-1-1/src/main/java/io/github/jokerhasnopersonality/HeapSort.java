@@ -3,7 +3,7 @@ package io.github.jokerhasnopersonality;
 import java.util.Arrays;
 
 /**
- * HeapSort wrapper
+ * HeapSort wrapper.
  */
 public class HeapSort {
     /**
@@ -33,7 +33,7 @@ public class HeapSort {
             cnt++;
         }
         int res;
-        for (int i = 0; i < l; i++) {
+        for(int i = 0; i < l; i++) {
             res = newArr[0];
             swap(newArr, 0, cnt - 1);
             cnt--;
@@ -64,12 +64,10 @@ public class HeapSort {
             if (index * 2 + 1 >= size) {
                 //the end of heap
                 return;
-            }
-            else {
+            } else {
                 son = index * 2 + 1;
             }
-        }
-        else {
+        } else {
             son = arr[index * 2 + 1] < arr[index * 2 + 2] ? index * 2 + 1 : index * 2 + 2;
         }
         if (arr[index] > arr[son]) {
