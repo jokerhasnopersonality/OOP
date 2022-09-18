@@ -21,24 +21,23 @@ public class HeapSort {
      * @param arr array that is to be sorted by the algorithm
      */
     public static void heapsort(int[] arr) {
-        if (arr == null) {
+        int l = arr.length;
+        if (l == 0) {
             return;
         }
-        int l = arr.length;
-        int[] newArr = new int[l];
         int cnt = 0;
         for (int i = 0; i < l; i++) {
-            newArr[cnt] = arr[i];
-            siftup(newArr, cnt);
+            siftup(arr, cnt);
             cnt++;
         }
-        int res;
         for (int i = 0; i < l; i++) {
-            res = newArr[0];
-            swap(newArr, 0, cnt - 1);
+            swap(arr, 0, cnt - 1);
             cnt--;
-            siftdown(newArr, cnt, 0);
-            arr[i] = res;
+            siftdown(arr, cnt, 0);
+        }
+        l = l - 1;
+        for (int i = 0; i <= l / 2; i++) {
+            swap(arr, i, l - i);
         }
     }
 
