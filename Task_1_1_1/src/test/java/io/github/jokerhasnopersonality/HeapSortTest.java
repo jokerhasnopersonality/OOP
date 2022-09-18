@@ -15,7 +15,7 @@ public class HeapSortTest {
         int[] arr = {};
         int[] test = {};
         HeapSort.heapsort(arr);
-        assertArrayEquals(test, arr);
+        assertArrayEquals(arr, test);
     }
 
     @Test
@@ -23,7 +23,7 @@ public class HeapSortTest {
         int[] arr = {0};
         int[] test = {0};
         HeapSort.heapsort(arr);
-        assertArrayEquals(test, arr);
+        assertArrayEquals(arr, test);
     }
 
     @Test
@@ -31,7 +31,7 @@ public class HeapSortTest {
         int[] arr = {5, 3, -4, 6, 2};
         int[] test = {-4, 2, 3, 5, 6};
         HeapSort.heapsort(arr);
-        assertArrayEquals(test, arr);
+        assertArrayEquals(arr, test);
     }
 
     @Test
@@ -39,7 +39,7 @@ public class HeapSortTest {
         int[] arr = {-3, 0, 1, 2};
         int[] test = {-3, 0, 1, 2};
         HeapSort.heapsort(arr);
-        assertArrayEquals(test, arr);
+        assertArrayEquals(arr, test);
     }
 
     @Test
@@ -47,7 +47,7 @@ public class HeapSortTest {
         int[] arr = {7, 8, 9, 2, 4, 5};
         int[] test = {2, 4, 5, 7, 8, 9};
         HeapSort.heapsort(arr);
-        assertArrayEquals(test, arr);
+        assertArrayEquals(arr, test);
     }
 
     @Test
@@ -55,6 +55,6 @@ public class HeapSortTest {
         int[] arr = {1, 1, 1, 1, 1};
         int[] test = {1, 1, 1, 1, 1};
         HeapSort.heapsort(arr);
-        assertArrayEquals(test, arr);
+        assertArrayEquals(arr, test);
     }
 }
