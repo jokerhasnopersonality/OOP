@@ -30,11 +30,11 @@ public class StackTest {
         assertEquals(4, stack1.count());
         assertEquals(9, stack1.pop());
 
-        Stack<Integer> test_stack = stack1.popStack(3);
-        assertEquals(5, test_stack.pop());
-        assertEquals(2, test_stack.count());
-        test_stack.push(0);
-        test_stack.push(12);
-        assertEquals(4, test_stack.count());
+        Stack<Integer> testStack = stack1.popStack(3);
+        assertEquals(5, testStack.pop());
+        assertEquals(2, testStack.count());
+        testStack.push(0);
+        testStack.push(12);
+        assertEquals(4, testStack.count());
     }
 }
