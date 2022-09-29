@@ -87,18 +87,18 @@ public class Stack<T> {
     /**
      * Extracts the assigned number of elements from the source stack.
      *
-     * @param pop_count number of elements to be extracted from the top of the stack
+     * @param popCount number of elements to be extracted from the top of the stack
      * @return a new Stack object with extracted elements
      */
-    public Stack<T> popStack(int popСount) {
-        if (count < popСount || count == 0) {
+    public Stack<T> popStack(int popCount) {
+        if (count < popCount || count == 0) {
             return null;
         }
         Stack<T> newStack = new Stack<T>();
-        newStack.count = popСount;
-        newStack.resize((int) (popСount * 1.5));
-        this.count -= popСount;
-        for (int i = 0; i < popСount; i++) {
+        newStack.count = popCount;
+        newStack.resize((int) (popCount * 1.5));
+        this.count -= popCount;
+        for (int i = 0; i < popCount; i++) {
             newStack.array[i] = this.array[this.count + i];
             this.array[this.count + i] = null;
         }
