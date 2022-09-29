@@ -18,7 +18,7 @@ public class Stack<T> {
      */
     @SuppressWarnings("unchecked")
     public Stack() {
-        this.array = (T[])new Object[INIT_LENGTH];
+        this.array = (T[]) new Object[INIT_LENGTH];
         this.capacity = INIT_LENGTH;
         this.count = 0;
     }
@@ -26,8 +26,8 @@ public class Stack<T> {
     /**
      * Changes the size of Stack object's array.
      */
-    private void resize(int new_size) {
-        capacity = new_size;
+    private void resize(int newSize) {
+        capacity = newSize;
         array = Arrays.copyOf(array, capacity);
     }
 
@@ -42,7 +42,7 @@ public class Stack<T> {
         }
         array[count++] = element;
         if (count >= capacity) {
-            resize((int)(count * 1.5));
+            resize((int) (count * 1.5));
         }
     }
 
@@ -50,6 +50,7 @@ public class Stack<T> {
      * Pushes the array of the given stack to the end of the source stack array,
      * increments the count of elements in source stack,
      * checks if the source stack array needs resizing.
+     *
      * @param stack the given stack
      */
     public void pushStack(Stack<T> stack) {
@@ -58,7 +59,7 @@ public class Stack<T> {
         }
         count += stack.count;
         if (count >= capacity) {
-            resize((int)(count * 1.5));
+            resize((int) (count * 1.5));
         }
         for (int i = stack.count; i >= 0; i--) {
             array[count - i] = stack.array[stack.count - i];
@@ -67,6 +68,7 @@ public class Stack<T> {
 
     /**
      * Extracts the element from the top of the stack.
+     *
      * @return the top element
      */
     public T pop() {
@@ -84,25 +86,26 @@ public class Stack<T> {
 
     /**
      * Extracts the assigned number of elements from the source stack.
+     *
      * @param pop_count number of elements to be extracted from the top of the stack
      * @return a new Stack object with extracted elements
      */
-    public Stack<T> popStack(int pop_count) {
-        if (count < pop_count || count == 0) {
+    public Stack<T> popStack(int popСount) {
+        if (count < popСount || count == 0) {
             return null;
         }
-        Stack<T> new_stack = new Stack<T>();
-        new_stack.count = pop_count;
-        new_stack.resize((int)(pop_count * 1.5));
-        this.count -= pop_count;
-        for (int i = 0; i < pop_count; i++) {
-            new_stack.array[i] = this.array[this.count + i];
+        Stack<T> newStack = new Stack<T>();
+        newStack.count = popСount;
+        newStack.resize((int) (popСount * 1.5));
+        this.count -= popСount;
+        for (int i = 0; i < popСount; i++) {
+            newStack.array[i] = this.array[this.count + i];
             this.array[this.count + i] = null;
         }
         if (count < capacity / 4) {
             resize(capacity / 2);
         }
-        return new_stack;
+        return newStack;
     }
 
     public int count() {
