@@ -3,7 +3,7 @@ plugins {
     id 'jacoco'
 }
 
-group 'ru.nsu.ktulegenova'
+group 'io.github.jokerhasnopersonality'
 version '1.0-SNAPSHOT'
 
 repositories {
