@@ -1,10 +1,9 @@
 package io.github.jokerhasnopersonality;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.util.Arrays;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Tests to check class Stack.
@@ -36,5 +35,18 @@ public class StackTest {
         testStack.push(0);
         testStack.push(12);
         assertEquals(4, testStack.count());
+    }
+
+    @Test
+    public void test_exception() {
+        Stack<Integer> stack = new Stack<Integer>();
+        try {
+            stack.push(null);
+        } catch (Exception thrown) {}
+        assertEquals(0, stack.count());
+        try {
+            stack.pushStack(null);
+        } catch (Exception thrown) {}
+        assertEquals(0, stack.count());
     }
 }
