@@ -268,10 +268,15 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>push</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;push&#8203;(<a href="Stack.html" title="type parameter in Stack">T</a>&nbsp;element)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;push&#8203;(<a href="Stack.html" title="type parameter in Stack">T</a>&nbsp;element)
+          throws java.lang.NullPointerException</pre>
 <div class="block">Adds the element to the end of the stack,
  increments the count of elements in stack,
  then checks if the object's array needs resizing.</div>
+<dl>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code>java.lang.NullPointerException</code></dd>
+</dl>
 </li>
 </ul>
 <a id="pushStack(io.github.jokerhasnopersonality.Stack)">
@@ -280,13 +285,16 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>pushStack</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;pushStack&#8203;(<a href="Stack.html" title="class in io.github.jokerhasnopersonality">Stack</a>&lt;<a href="Stack.html" title="type parameter in Stack">T</a>&gt;&nbsp;stack)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;pushStack&#8203;(<a href="Stack.html" title="class in io.github.jokerhasnopersonality">Stack</a>&lt;<a href="Stack.html" title="type parameter in Stack">T</a>&gt;&nbsp;stack)
+               throws java.lang.NullPointerException</pre>
 <div class="block">Pushes the array of the given stack to the end of the source stack array,
  increments the count of elements in source stack,
  checks if the source stack array needs resizing.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>stack</code> - the given stack</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code>java.lang.NullPointerException</code></dd>
 </dl>
 </li>
 </ul>
