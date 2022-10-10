@@ -44,11 +44,11 @@ public class StackTest {
             stack.push(null);
         } catch (Exception thrown) {
             assertEquals(0, stack.count());
-        }
+         }
         try {
             stack.pushStack(null);
         } catch (Exception thrown) {
             assertEquals(0, stack.count());
-        }
+         }
     }
 }
