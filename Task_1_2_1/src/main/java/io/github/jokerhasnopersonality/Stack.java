@@ -36,9 +36,9 @@ public class Stack<T> {
      * increments the count of elements in stack,
      * then checks if the object's array needs resizing.
      */
-    public void push(T element) {
+    public void push(T element) throws NullPointerException{
         if (element == null) {
-            return;
+            throw new NullPointerException("Cannot push \"null\" element to stack.");
         }
         array[count++] = element;
         if (count >= capacity) {
@@ -53,8 +53,11 @@ public class Stack<T> {
      *
      * @param stack the given stack
      */
-    public void pushStack(Stack<T> stack) {
-        if (stack == null || stack.count == 0) {
+    public void pushStack(Stack<T> stack) throws NullPointerException{
+        if (stack == null) {
+            throw new NullPointerException("Cannot push \"null\" elements to stack.");
+        }
+        if (stack.count == 0) {
             return;
         }
         count += stack.count;
