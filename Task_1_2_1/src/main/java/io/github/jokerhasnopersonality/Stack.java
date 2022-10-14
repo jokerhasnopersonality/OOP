@@ -1,6 +1,7 @@
 package io.github.jokerhasnopersonality;
 
 import java.util.Arrays;
+import java.util.EmptyStackException;
 
 /**
  * Stack wrapper.
@@ -74,9 +75,9 @@ public class Stack<T> {
      *
      * @return the top element
      */
-    public T pop() {
+    public T pop() throws EmptyStackException {
         if (count == 0) {
-            return null;
+            throw new EmptyStackException();
         }
         count--;
         T popped = array[count];
