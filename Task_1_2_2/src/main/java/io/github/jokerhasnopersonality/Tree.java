@@ -1,129 +1,269 @@
 package io.github.jokerhasnopersonality;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Spliterator;
-import java.util.function.IntFunction;
-import java.util.function.Predicate;
-import java.util.stream.Stream;
+import java.util.*;
 
 /**
  * Generic class of a Tree collection.
+ *
+ * @param <T> type of Tree elements
  */
-public class Tree<T> implements Collection<T> {
-    private int count;
-    private final Node<T> root;
+public class Tree<T> implements Iterable<T> {
+    private final Tree<T> root;
+    private T value;
+    private Tree<T> parent;
+    private final ArrayList<Tree<T>> children;
+    public Search search;
+    private int checkCount;
 
+    /**
+     * Constructor for new Tree element. Search type is set to BFS by default.
+     */
     public Tree() {
-        root = new Node<T>();
-        count = 0;
+        root = this;
+        value = null;
+        parent = null;
+        children = new ArrayList<>();
+        search = Search.BFS;
     }
 
     /**
-     * Returns the number of elements in this collection.
+     * Traversal types for iterating over elements.
      */
-    @Override
-    public int size() {
-        return count;
+    enum Search {
+        // Breadth First Search
+        BFS,
+        // Depth First Search
+        DFS
     }
 
     /**
-     * Returns {@code true} if this collection contains no elements.
-     */
-    @Override
-    public boolean isEmpty() {
-        return (count == 0);
-    }
-
-    /**
-     * Returns {@code true} if this collection contains the specified element.
+     * Returns iterator over tree elements with specified traversal type.
      *
-     * @param o element whose presence in this collection is to be tested
-     * @return {@code true} if this collection contains the specified
-     * element
+     * @throws IllegalStateException if traversal type is not specified
      */
+
     @Override
-    public boolean contains(Object o) {
-        for (T node : this) {
-            if (node == o) {
+    public Iterator<T> iterator() throws IllegalStateException{
+        if (search == Search.BFS) {
+            return new BFS();
+        } else if (search == Search.DFS) {
+            return new DFS();
+        } else {
+            throw new IllegalStateException();
+        }
+    }
+
+    /**
+     * Updates tree checkCount up to the root. Helps to track tree modification.
+     */
+    private void update() {
+        Tree<T> element = root;
+        while (element.parent != null) {
+            element.checkCount++;
+            element = element.parent;
+        }
+        element.checkCount++;
+    }
+
+    /**
+     * Sets value for a tree element.
+     *
+     * @param newValue value to be set
+     * @throws NullPointerException if the value is not specified
+     */
+    public void value(T newValue) throws NullPointerException {
+        if (newValue == null) {
+            throw new NullPointerException();
+        }
+        update();
+        this.value = newValue;
+    }
+
+    /**
+     * Returns the value of the element.
+     */
+    public T getValue() {
+        return value;
+    }
+
+    /**
+     * Returns the descendants of the tree element.
+     */
+    public ArrayList<Tree<T>> getChildren() {
+        return children;
+    }
+
+    /**
+     * Returns parent of the tree element.
+     */
+    public Tree<T> getParent() {
+        return parent;
+    }
+
+    /**
+     * Adds an element to a tree's descendants.
+     *
+     * @return new Tree element with the specified value
+     * @throws NullPointerException if the value is not specified
+     */
+    public Tree<T> add(T newValue) throws NullPointerException {
+        if (newValue == null) {
+            throw new NullPointerException("Cannot add \"null\" element to a tree.");
+        }
+        Tree<T> element = new Tree<>();
+        element.value = newValue;
+        element.parent = this;
+        element.search = this.search;
+        update();
+        children.add(element);
+        return element;
+    }
+
+    /**
+     * Adds an element to the specified subtree's descendants.
+     *
+     * @throws NullPointerException if tree element is not specified
+     */
+    public Tree<T> add(Tree<T> tree, T newValue) throws NullPointerException {
+        if (tree == null) {
+            throw new NullPointerException("Tree node must be specified.");
+        }
+        return tree.add(newValue);
+    }
+
+    /**
+     * Removes an element with given value if such an element exists in a tree.
+     *
+     * @param delValue the value of element to be deleted
+     * @return {@code true} if the element was found and deleted
+     */
+    public boolean remove(T delValue) {
+        for (int i = 0; i < this.children.size(); i++) {
+            Tree<T> t = this.children.get(i);
+            if (t.value == delValue) {
+                update();
+                this.children.remove(t);
                 return true;
             }
+            t.remove(delValue);
         }
         return false;
     }
 
-    @Override
-    public Iterator iterator() {
-        return null;
+    /**
+     * Returns a list of ordered tree elements' values.
+     */
+    public ArrayList<T> treeList () {
+        T curr;
+        ArrayList<T> list = new ArrayList<>();
+        Iterator<T> iterator = iterator();
+        while (iterator.hasNext()) {
+            curr = iterator.next();
+            list.add(curr);
+        }
+        return list;
     }
 
-    @Override
-    public Object[] toArray() {
-        return new Object[0];
+    /**
+     * Breadth First Search iterator for Tree elements.
+     */
+    public class BFS implements Iterator<T> {
+        private final Tree<T> rootBFS;
+        private final Queue<Tree<T>> queue;
+        private final int checkBFS;
+
+        /**
+         * Initiates a queue with a root of a tree.
+         */
+        public BFS() {
+            queue = new LinkedList<>();
+            rootBFS = root;
+            checkBFS = root.checkCount;
+            queue.add(rootBFS);
+        }
+
+        /**
+         * Returns {@code true} if the iteration has more elements.
+         * (In other words, returns {@code true} if {@link #next} would
+         * return an element rather than throwing an exception.)
+         *
+         * @return {@code true} if the iteration has more elements
+         */
+        @Override
+        public boolean hasNext() {
+            return (!queue.isEmpty());
+        }
+
+        /**
+         * Returns the next element in the iteration.
+         *
+         * @return the next element in the iteration
+         * @throws NoSuchElementException if the iteration has no more elements
+         */
+        @Override
+        public T next() throws NoSuchElementException, ConcurrentModificationException {
+            if (checkBFS < rootBFS.checkCount) {
+                throw new ConcurrentModificationException();
+            }
+            if (queue.isEmpty()) {
+                throw new NoSuchElementException();
+            }
+            Tree<T> next = queue.poll();
+            queue.addAll(next.children);
+            return next.getValue();
+        }
     }
 
-    @Override
-    public Object[] toArray(IntFunction generator) {
-        return Collection.super.toArray(generator);
-    }
+    /**
+     * Depth First Search iterator for Tree elements.
+     */
+    public class DFS implements Iterator<T> {
+        private final Tree<T> rootDFS;
+        private final Stack<Tree<T>> stack;
+        private final int checkDFS;
 
-    @Override
-    public boolean add(Object o) {
-        return false;
-    }
+        /**
+         * Initiates a stack with a root of a tree.
+         */
+        public DFS() {
+            stack = new Stack<>();
+            rootDFS = root;
+            checkDFS = rootDFS.checkCount;
+            stack.push(rootDFS);
+        }
 
-    @Override
-    public boolean remove(Object o) {
-        return false;
-    }
+        /**
+         * Returns {@code true} if the iteration has more elements.
+         * (In other words, returns {@code true} if {@link #next} would
+         * return an element rather than throwing an exception.)
+         *
+         * @return {@code true} if the iteration has more elements
+         */
+        @Override
+        public boolean hasNext() {
+            return (!stack.isEmpty());
+        }
 
-    @Override
-    public boolean addAll(Collection c) {
-        return false;
-    }
-
-    @Override
-    public boolean removeIf(Predicate filter) {
-        return Collection.super.removeIf(filter);
-    }
-
-    @Override
-    public void clear() {
-
-    }
-
-    @Override
-    public Spliterator spliterator() {
-        return Collection.super.spliterator();
-    }
-
-    @Override
-    public Stream stream() {
-        return Collection.super.stream();
-    }
-
-    @Override
-    public Stream parallelStream() {
-        return Collection.super.parallelStream();
-    }
-
-    @Override
-    public boolean retainAll(Collection c) {
-        return false;
-    }
-
-    @Override
-    public boolean removeAll(Collection c) {
-        return false;
-    }
-
-    @Override
-    public boolean containsAll(Collection c) {
-        return false;
-    }
-
-    @Override
-    public Object[] toArray(Object[] a) {
-        return new Object[0];
+        /**
+         * Returns the next element in the iteration.
+         *
+         * @return the next element in the iteration
+         * @throws NoSuchElementException if the iteration has no more elements
+         */
+        @Override
+        public T next() throws NoSuchElementException, ConcurrentModificationException {
+            if (stack.isEmpty()) {
+                throw new NoSuchElementException();
+            }
+            if (checkDFS < rootDFS.checkCount) {
+                throw new ConcurrentModificationException();
+            }
+            Tree<T> next = stack.pop();
+            int i = next.children.size() - 1;
+            for (; i>=0; i--) {
+                stack.push(next.children.get(i));
+            }
+            return next.getValue();
+        }
     }
 }
