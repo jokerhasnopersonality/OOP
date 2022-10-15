@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"io.github.jokerhasnopersonality","l":"Tree.BFS"},{"p":"io.github.jokerhasnopersonality","l":"Tree.DFS"},{"p":"io.github.jokerhasnopersonality","l":"Node"},{"p":"io.github.jokerhasnopersonality","l":"Tree"}]
