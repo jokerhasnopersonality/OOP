@@ -1,13 +1,12 @@
 package io.github.jokerhasnopersonality;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests to check HeapSort algorithm.
@@ -34,29 +33,29 @@ public class TreeTest {
                   /
                  10
      */
-    public Tree<Integer> A;
+    public Tree<Integer> treeA;
 
     @BeforeEach
     public void init() {
-        A = new Tree<>();
-        A.value(1);
-        Tree<Integer> B = A.add(3);
-        B.add(4);
-        Tree<Integer> C = A.add(6);
-        C.add(9).add(10);
-        Tree<Integer> D = A.add(7);
-        A.add(D, 8);
-        A.add(D, 12);
+        treeA = new Tree<>();
+        treeA.value(1);
+        Tree<Integer> treeB = treeA.add(3);
+        treeB.add(4);
+        Tree<Integer> treeC = treeA.add(6);
+        treeC.add(9).add(10);
+        Tree<Integer> treeD = treeA.add(7);
+        treeA.add(treeD, 8);
+        treeA.add(treeD, 12);
     }
 
     @Test
-    public void testBFS() {
+    public void testBreadthFirstSearch() {
         ArrayList<Integer> test = new ArrayList<>();
         Integer[] l = {1, 3, 6, 7, 4, 9, 8, 12, 10};
         Collections.addAll(test, l);
-        Assertions.assertEquals(test, A.treeList());
-        Tree<Integer> B = A.getChildren().get(1);
-        Iterator<Integer> iterator = B.iterator();
+        Assertions.assertEquals(test, treeA.treeList());
+        Tree<Integer> treeB = treeA.getChildren().get(1);
+        Iterator<Integer> iterator = treeB.iterator();
         Integer next = iterator.next();
         Assertions.assertEquals(6, next);
         next = iterator.next();
@@ -64,39 +63,44 @@ public class TreeTest {
     }
 
     @Test
-    public void testDFS() {
+    public void testDepthFirstSearch() {
         ArrayList<Integer> test = new ArrayList<>();
         Integer[] l = {1, 3, 4, 6, 9, 10, 7, 8, 12};
         Collections.addAll(test, l);
-        A.search = Tree.Search.DFS;
-        Assertions.assertEquals(test, A.treeList());
+        treeA.search = Tree.Search.DFS;
+        Assertions.assertEquals(test, treeA.treeList());
     }
 
     @Test
     public void simple_test() {
-        Tree<Integer> B = A.getChildren().get(1);
-        A.remove(B.getValue());
-        Assertions.assertEquals(2, A.getChildren().size());
+        Tree<Integer> treeB = treeA.getChildren().get(1);
+        treeA.remove(treeB.getValue());
+        Assertions.assertEquals(2, treeA.getChildren().size());
         ArrayList<Integer> test = new ArrayList<>();
         Integer[] l = {1, 3, 7, 4, 8, 12};
         Collections.addAll(test, l);
-        Assertions.assertEquals(test, A.treeList());
+        Assertions.assertEquals(test, treeA.treeList());
     }
 
     @Test
     public void testConcurrentModificationException() {
         try {
-            for (Object t : A) {
-                A.getChildren().get(2).value(143);
+            for (Object t : treeA) {
+                treeA.getChildren().get(2).value(143);
+            }
+        } catch (ConcurrentModificationException thrown) {}
+        try {
+            for (Object t : treeA) {
+                treeA.getChildren().get(1).remove(9);
             }
         } catch (ConcurrentModificationException thrown) {}
     }
 
     @Test
     public void testSearchType() {
-        A.search = null;
+        treeA.search = null;
         try {
-            Iterator<Integer> iterator = A.iterator();
+            Iterator<Integer> iterator = treeA.iterator();
         } catch (IllegalStateException thrown) {}
     }
 }
