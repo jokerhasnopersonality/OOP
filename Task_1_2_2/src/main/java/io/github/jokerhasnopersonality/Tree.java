@@ -8,7 +8,6 @@ import java.util.*;
  * @param <T> type of Tree elements
  */
 public class Tree<T> implements Iterable<T> {
-    private final Tree<T> root;
     private T value;
     private Tree<T> parent;
     private final ArrayList<Tree<T>> children;
@@ -19,7 +18,6 @@ public class Tree<T> implements Iterable<T> {
      * Constructor for new Tree element. Search type is set to BFS by default.
      */
     public Tree() {
-        root = this;
         value = null;
         parent = null;
         children = new ArrayList<>();
@@ -45,9 +43,9 @@ public class Tree<T> implements Iterable<T> {
     @Override
     public Iterator<T> iterator() throws IllegalStateException{
         if (search == Search.BFS) {
-            return new BFS();
+            return new BFS(this);
         } else if (search == Search.DFS) {
-            return new DFS();
+            return new DFS(this);
         } else {
             throw new IllegalStateException();
         }
@@ -57,7 +55,7 @@ public class Tree<T> implements Iterable<T> {
      * Updates tree checkCount up to the root. Helps to track tree modification.
      */
     private void update() {
-        Tree<T> element = root;
+        Tree<T> element = this;
         while (element.parent != null) {
             element.checkCount++;
             element = element.parent;
@@ -132,7 +130,7 @@ public class Tree<T> implements Iterable<T> {
     }
 
     /**
-     * Removes an element with given value if such an element exists in a tree.
+     * Removes a subtree with given value at the root if such a subtree exists in origin tree.
      *
      * @param delValue the value of element to be deleted
      * @return {@code true} if the element was found and deleted
@@ -142,12 +140,23 @@ public class Tree<T> implements Iterable<T> {
             Tree<T> t = this.children.get(i);
             if (t.value == delValue) {
                 update();
+                t.removeChildren();
                 this.children.remove(t);
                 return true;
             }
             t.remove(delValue);
         }
         return false;
+    }
+
+    private void removeChildren() {
+        Tree<T> curr = this;
+        for (int i = 0; i < this.children.size(); i++) {
+            if (!this.children.get(i).children.isEmpty()) {
+                this.children.get(i).removeChildren();
+            }
+            this.children.remove(i);
+        }
     }
 
     /**
@@ -175,7 +184,7 @@ public class Tree<T> implements Iterable<T> {
         /**
          * Initiates a queue with a root of a tree.
          */
-        public BFS() {
+        public BFS(Tree<T> root) {
             queue = new LinkedList<>();
             rootBFS = root;
             checkBFS = root.checkCount;
@@ -225,7 +234,7 @@ public class Tree<T> implements Iterable<T> {
         /**
          * Initiates a stack with a root of a tree.
          */
-        public DFS() {
+        public DFS(Tree<T> root) {
             stack = new Stack<>();
             rootDFS = root;
             checkDFS = rootDFS.checkCount;
