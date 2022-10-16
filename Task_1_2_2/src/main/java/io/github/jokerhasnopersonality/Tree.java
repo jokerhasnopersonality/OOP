@@ -1,6 +1,12 @@
 package io.github.jokerhasnopersonality;
 
-import java.util.*;
+import java.util.Iterator;
+import java.util.ArrayList;
+import java.util.Queue;
+import java.util.Stack;
+import java.util.LinkedList;
+import java.util.NoSuchElementException;
+import java.util.ConcurrentModificationException;
 
 /**
  * Generic class of a Tree collection.
@@ -41,11 +47,11 @@ public class Tree<T> implements Iterable<T> {
      */
 
     @Override
-    public Iterator<T> iterator() throws IllegalStateException{
+    public Iterator<T> iterator() throws IllegalStateException {
         if (search == Search.BFS) {
-            return new BFS(this);
+            return new BreadthFirstSearch(this);
         } else if (search == Search.DFS) {
-            return new DFS(this);
+            return new DepthFirstSearch(this);
         } else {
             throw new IllegalStateException();
         }
@@ -150,8 +156,7 @@ public class Tree<T> implements Iterable<T> {
     }
 
     private void removeChildren() {
-        Tree<T> curr = this;
-        for (int i = 0; i < this.children.size(); i++) {
+        for (int i = this.children.size() - 1; i >= 0; i--) {
             if (!this.children.get(i).children.isEmpty()) {
                 this.children.get(i).removeChildren();
             }
@@ -162,7 +167,7 @@ public class Tree<T> implements Iterable<T> {
     /**
      * Returns a list of ordered tree elements' values.
      */
-    public ArrayList<T> treeList () {
+    public ArrayList<T> treeList() {
         T curr;
         ArrayList<T> list = new ArrayList<>();
         Iterator<T> iterator = iterator();
@@ -176,19 +181,19 @@ public class Tree<T> implements Iterable<T> {
     /**
      * Breadth First Search iterator for Tree elements.
      */
-    public class BFS implements Iterator<T> {
-        private final Tree<T> rootBFS;
+    public class BreadthFirstSearch implements Iterator<T> {
+        private final Tree<T> root;
         private final Queue<Tree<T>> queue;
-        private final int checkBFS;
+        private final int check;
 
         /**
          * Initiates a queue with a root of a tree.
          */
-        public BFS(Tree<T> root) {
+        public BreadthFirstSearch(Tree<T> root) {
             queue = new LinkedList<>();
-            rootBFS = root;
-            checkBFS = root.checkCount;
-            queue.add(rootBFS);
+            this.root = root;
+            check = root.checkCount;
+            queue.add(this.root);
         }
 
         /**
@@ -211,7 +216,7 @@ public class Tree<T> implements Iterable<T> {
          */
         @Override
         public T next() throws NoSuchElementException, ConcurrentModificationException {
-            if (checkBFS < rootBFS.checkCount) {
+            if (check < root.checkCount) {
                 throw new ConcurrentModificationException();
             }
             if (queue.isEmpty()) {
@@ -226,19 +231,19 @@ public class Tree<T> implements Iterable<T> {
     /**
      * Depth First Search iterator for Tree elements.
      */
-    public class DFS implements Iterator<T> {
-        private final Tree<T> rootDFS;
+    public class DepthFirstSearch implements Iterator<T> {
+        private final Tree<T> root;
         private final Stack<Tree<T>> stack;
-        private final int checkDFS;
+        private final int check;
 
         /**
          * Initiates a stack with a root of a tree.
          */
-        public DFS(Tree<T> root) {
+        public DepthFirstSearch(Tree<T> root) {
             stack = new Stack<>();
-            rootDFS = root;
-            checkDFS = rootDFS.checkCount;
-            stack.push(rootDFS);
+            this.root = root;
+            check = this.root.checkCount;
+            stack.push(this.root);
         }
 
         /**
@@ -264,12 +269,12 @@ public class Tree<T> implements Iterable<T> {
             if (stack.isEmpty()) {
                 throw new NoSuchElementException();
             }
-            if (checkDFS < rootDFS.checkCount) {
+            if (check < root.checkCount) {
                 throw new ConcurrentModificationException();
             }
             Tree<T> next = stack.pop();
             int i = next.children.size() - 1;
-            for (; i>=0; i--) {
+            for (; i >= 0; i--) {
                 stack.push(next.children.get(i));
             }
             return next.getValue();
