@@ -35,6 +35,9 @@ public class TreeTest {
      */
     public Tree<Integer> treeA;
 
+    /**
+     * Initiating test tree for tests.
+     */
     @BeforeEach
     public void init() {
         treeA = new Tree<>();
@@ -84,23 +87,23 @@ public class TreeTest {
 
     @Test
     public void testConcurrentModificationException() {
-        try {
+        Assertions.assertThrows(ConcurrentModificationException.class, () -> {
             for (Object t : treeA) {
                 treeA.getChildren().get(2).value(143);
             }
-        } catch (ConcurrentModificationException thrown) {}
-        try {
+        });
+        Assertions.assertThrows(ConcurrentModificationException.class, () -> {
             for (Object t : treeA) {
                 treeA.getChildren().get(1).remove(9);
             }
-        } catch (ConcurrentModificationException thrown) {}
+        });
     }
 
     @Test
     public void testSearchType() {
         treeA.search = null;
-        try {
+        Assertions.assertThrows(IllegalStateException.class, () -> {
             Iterator<Integer> iterator = treeA.iterator();
-        } catch (IllegalStateException thrown) {}
+        });
     }
 }
