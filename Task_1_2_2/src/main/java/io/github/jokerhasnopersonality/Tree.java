@@ -1,12 +1,12 @@
 package io.github.jokerhasnopersonality;
 
-import java.util.Iterator;
 import java.util.ArrayList;
-import java.util.Queue;
-import java.util.Stack;
+import java.util.ConcurrentModificationException;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
-import java.util.ConcurrentModificationException;
+import java.util.Queue;
+import java.util.Stack;
 
 /**
  * Generic class of a Tree collection.
