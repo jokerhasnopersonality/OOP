@@ -1,33 +1,113 @@
 package io.github.jokerhasnopersonality;
 
-public class IncidenceMatrix<V, E extends Number> implements Graph {
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+/**
+ * Graph realization supporting incidence matrix.
+ */
+public class IncidenceMatrix<V, E extends Number> implements Graph<V, E> {
+    private int verticesCnt;
+    private int edgesCnt;
+    private HashMap<Vertex<V>, HashMap<Edge<V, E>, EdgeSideType>> matrix;
+    public enum EdgeSideType {
+        END,
+        START,
+        UNDIRECTED
+    }
+
+    public IncidenceMatrix() {
+        matrix = new HashMap<>();
+    }
     @Override
-    public Vertex addVertex(Object vertex) {
+    public Vertex<V> addVertex(V value) {
+        Vertex<V> newVertex = new Vertex<>(value);
+        matrix.put(newVertex, new HashMap<Edge<V, E>, EdgeSideType>());
+        verticesCnt++;
+        return newVertex;
+    }
+
+    @Override
+    public void removeVertex(Vertex<V> vertex) {
+        matrix.get(vertex).clear();
+        matrix.remove(vertex);
+        verticesCnt--;
+    }
+
+    @Override
+    public Edge<V, E> addEdge(Vertex<V> v1, Vertex<V> v2, E weight) {
+        Edge<V, E> newEdge;
+        newEdge = this.getEdge(v2, v1);
+        if (newEdge != null && newEdge.getWeight().equals(weight)) {
+            matrix.get(v1).replace(newEdge, EdgeSideType.UNDIRECTED);
+            matrix.get(v2).replace(newEdge, EdgeSideType.UNDIRECTED);
+        } else {
+            newEdge = new Edge<>(v1, v2, weight);
+            matrix.get(v1).put(newEdge, EdgeSideType.START);
+            matrix.get(v2).put(newEdge, EdgeSideType.END);
+        }
+        edgesCnt++;
+        return newEdge;
+    }
+
+    @Override
+    public void removeEdge(Edge<V, E> edge) {
+        for (Vertex<V> vertex : matrix.keySet()) {
+            if (matrix.get(vertex).containsKey(edge)) {
+                matrix.get(vertex).remove(edge);
+            }
+        }
+        edgesCnt--;
+    }
+
+    @Override
+    public Vertex<V> getVertex(V value) throws NullPointerException {
+        if (value == null) {
+            throw new NullPointerException("Vertex value must be specified.");
+        }
+        for (Vertex<V> vertex : matrix.keySet()) {
+            if (vertex.getValue().equals(value)) {
+                return vertex;
+            }
+        }
         return null;
     }
 
     @Override
-    public Vertex removeVertex(Object vertex) {
+    public Edge<V, E> getEdge(Vertex<V> start, Vertex<V> end) {
+        for (Edge<V, E> edge : matrix.get(start).keySet()) {
+            if (edge.getEnd().getValue().equals(end.getValue())) {
+                return edge;
+            }
+        }
         return null;
     }
 
     @Override
-    public Edge addEdge(Object v1, Object v2) {
-        return null;
+    public List<Vertex<V>> getVertices() {
+        List<Vertex<V>> vertices = new ArrayList<Vertex<V>>(matrix.keySet());
+        return vertices;
     }
 
     @Override
-    public Edge removeEdge(Object v1, Object v2) {
-        return null;
+    public List<Edge<V, E>> getEdges() {
+        Set<Edge<V, E>> set = new HashSet<>();
+        for (Vertex<V> vertex : matrix.keySet()) {
+            set.addAll(matrix.get(vertex).keySet());
+        }
+        List<Edge<V, E>> edges = new ArrayList<>();
+        edges.addAll(set);
+        return edges;
     }
 
-    @Override
-    public Vertex getVertex(Object value) {
-        return null;
+    public int getVerticesCnt() {
+        return verticesCnt;
     }
 
-    @Override
-    public Edge getEdge(Number weight) {
-        return null;
+    public int getEdgesCnt() {
+        return edgesCnt;
     }
 }
