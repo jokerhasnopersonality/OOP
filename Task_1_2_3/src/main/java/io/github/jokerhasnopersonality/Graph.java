@@ -3,17 +3,29 @@ package io.github.jokerhasnopersonality;
 import java.util.Arrays;
 import java.util.EmptyStackException;
 import java.util.HashMap;
+import java.util.List;
 
+/**
+ * Graph interface for graph realizations.
+ */
 public interface Graph<V, E extends Number> {
-    public Vertex addVertex(V vertex);
+    public Vertex<V> addVertex(V value);
 
-    public Vertex removeVertex(V vertex);
+    public void removeVertex(Vertex<V> vertex);
 
-    public Edge addEdge(V v1, V v2);
+    public Edge<V, E> addEdge(Vertex<V> v1, Vertex<V> v2, E weight);
 
-    public Edge removeEdge(V v1, V v2);
+    public void removeEdge(Edge<V, E> edge);
 
-    public Vertex getVertex(V value);
+    public Vertex<V> getVertex(V value);
 
-    public Edge getEdge(E weight);
+    public Edge<V, E> getEdge(Vertex<V> start, Vertex<V> end);
+
+    public List<Vertex<V>> getVertices();
+
+    public List<Edge<V, E>> getEdges();
+
+    public int getVerticesCnt();
+
+    public int getEdgesCnt();
 }
