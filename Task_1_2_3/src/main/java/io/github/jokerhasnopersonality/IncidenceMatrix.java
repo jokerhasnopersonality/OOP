@@ -43,9 +43,7 @@ public class IncidenceMatrix<V, E extends Number> implements Graph<V, E> {
 
     @Override
     public Edge<V, E> addEdge(Vertex<V> v1, Vertex<V> v2, E weight) {
-        Edge<V, E> newEdge;
-        newEdge = this.getEdge(v2, v1);
-        newEdge = new Edge<>(v1, v2, weight);
+        Edge<V, E> newEdge = new Edge<>(v1, v2, weight);
         matrix.get(v1).put(newEdge, EdgeSideType.START);
         matrix.get(v2).put(newEdge, EdgeSideType.END);
         edgesCnt++;
@@ -76,7 +74,7 @@ public class IncidenceMatrix<V, E extends Number> implements Graph<V, E> {
     @Override
     public Edge<V, E> getEdge(Vertex<V> start, Vertex<V> end) {
         for (Edge<V, E> edge : matrix.get(start).keySet()) {
-            if (matrix.get(start).get(edge).equals(EdgeSideType.START)) {
+            if (edge.getEnd().getValue().equals(end.getValue())) {
                 return edge;
             }
         }
