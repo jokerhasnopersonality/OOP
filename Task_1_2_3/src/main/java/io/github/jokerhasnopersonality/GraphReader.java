@@ -18,8 +18,7 @@ public class GraphReader {
      */
     public static void graphReader(Graph<String, Integer> graph, String path) {
         try {
-            Path getPath = Paths.get(path);
-            InputStream in = new FileInputStream(getPath.toFile());
+            InputStream in = GraphReader.class.getResourceAsStream(path);
             BufferedReader reader = new BufferedReader(new InputStreamReader(in));
             String line = reader.readLine();
             String[] numbers = line.split(" ");
