@@ -143,5 +143,33 @@ public class GraphTest {
         testSort = SortingAlgorithm.sort(v1, graph);
         expectedSort.replace("G", 10);
         Assertions.assertEquals(expectedSort, testSort);
+
+        graph = new AdjacencyMatrix<>();
+        GraphReader.graphReader(graph, path);
+        testSort = SortingAlgorithm.sort(v1, graph);
+        expectedSort.replace("G", 9);
+        Assertions.assertEquals(expectedSort, testSort);
+        edge = graph.getEdge(
+                graph.getVertex("E"),
+                graph.getVertex("G")
+        );
+        graph.removeEdge(edge);
+        testSort = SortingAlgorithm.sort(v1, graph);
+        expectedSort.replace("G", 10);
+        Assertions.assertEquals(expectedSort, testSort);
+
+        graph = new IncidenceMatrix<>();
+        GraphReader.graphReader(graph, path);
+        testSort = SortingAlgorithm.sort(v1, graph);
+        expectedSort.replace("G", 9);
+        Assertions.assertEquals(expectedSort, testSort);
+        edge = graph.getEdge(
+                graph.getVertex("E"),
+                graph.getVertex("G")
+        );
+        graph.removeEdge(edge);
+        testSort = SortingAlgorithm.sort(v1, graph);
+        expectedSort.replace("G", 10);
+        Assertions.assertEquals(expectedSort, testSort);
     }
 }
