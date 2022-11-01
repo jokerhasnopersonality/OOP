@@ -73,26 +73,23 @@ public class AdjacencyList<V, E extends Number> implements Graph<V, E> {
 
     @Override
     public List<Vertex<V>> getVertices() {
-        List<Vertex<V>> vertices = new ArrayList<Vertex<V>>(map.keySet());
-        return vertices;
+        return new ArrayList<Vertex<V>>(map.keySet());
     }
 
     @Override
     public List<Edge<V, E>> getEdges() {
         Set<Edge<V, E>> set = new HashSet<>();
         for (Vertex<V> vertex : map.keySet()) {
-            for (Tuple<Edge<V, E>, Vertex<V>> t : map.get(vertex)){
+            for (Tuple<Edge<V, E>, Vertex<V>> t : map.get(vertex)) {
                 set.add(t.getFirst());
             }
         }
-        List<Edge<V, E>> edges = new ArrayList<>();
-        edges.addAll(set);
-        return edges;
+        return new ArrayList<>(set);
     }
 
     private class Tuple<A, B> {
-        private A first;
-        private B second;
+        private final A first;
+        private final B second;
 
         private Tuple(A first, B second) {
             this.first = first;

@@ -24,7 +24,7 @@ public class AdjacencyMatrix<V, E extends Number> implements Graph<V, E> {
 
     @Override
     public Vertex<V> addVertex(V value) {
-        Vertex<V> newVertex = new Vertex(value);
+        Vertex<V> newVertex = new Vertex<>(value);
         matrix.putIfAbsent(newVertex, new HashMap<Vertex<V>, Edge<V, E>>());
         verticesCnt++;
         return newVertex;
@@ -38,11 +38,7 @@ public class AdjacencyMatrix<V, E extends Number> implements Graph<V, E> {
     }
 
     @Override
-    public Edge<V, E> addEdge(Vertex<V> v1, Vertex<V> v2, E weight)
-            throws NullPointerException, IllegalStateException {
-        if (v1 == null || v2 == null) {
-            throw new NullPointerException("Edge vertices must be specified.");
-        }
+    public Edge<V, E> addEdge(Vertex<V> v1, Vertex<V> v2, E weight) {
         Edge<V, E> newEdge = new Edge<>(v1, v2, weight);
         matrix.get(v1).put(v2, newEdge);
         edgesCnt++;
@@ -75,8 +71,7 @@ public class AdjacencyMatrix<V, E extends Number> implements Graph<V, E> {
 
     @Override
     public List<Vertex<V>> getVertices() {
-        List<Vertex<V>> vertices = new ArrayList<Vertex<V>>(matrix.keySet());
-        return vertices;
+        return new ArrayList<Vertex<V>>(matrix.keySet());
     }
 
     @Override
@@ -85,9 +80,7 @@ public class AdjacencyMatrix<V, E extends Number> implements Graph<V, E> {
         for (Vertex<V> vertex : matrix.keySet()) {
             set.addAll(matrix.get(vertex).values());
         }
-        List<Edge<V, E>> edges = new ArrayList<>();
-        edges.addAll(set);
-        return edges;
+        return new ArrayList<>(set);
     }
 
     public int getVerticesCnt() {

@@ -1,15 +1,25 @@
 package io.github.jokerhasnopersonality;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 
+/**
+ * GraphReader class for readings graphs from text files.
+ */
 public class GraphReader {
-    public static void graphReader(Graph<String, Integer> graph) {
+    /**
+     * Initializes a new graph based on the given text file.
+     */
+    public static void graphReader(Graph<String, Integer> graph, String path) {
         try {
-            Path path = Paths.get("C:\\Users\\37730\\OOP\\Task_1_2_3\\src\\main\\resources\\Graph.txt");
-            InputStream in = new FileInputStream(path.toFile());
+            Path getPath = Paths.get(path);
+            InputStream in = new FileInputStream(getPath.toFile());
             BufferedReader reader = new BufferedReader(new InputStreamReader(in));
             String line = reader.readLine();
             String[] numbers = line.split(" ");
@@ -20,7 +30,8 @@ public class GraphReader {
             for (int i = 0; i < verticesNumber; i++) {
                 graph.addVertex(vertices[i]);
             }
-            Vertex<String> v1, v2;
+            Vertex<String> v1;
+            Vertex<String> v2;
             for (int i = 0; i < edgesNumber; i++) {
                 line = reader.readLine();
                 String[] edge = line.split(" ");

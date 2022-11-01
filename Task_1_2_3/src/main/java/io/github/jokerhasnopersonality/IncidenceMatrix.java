@@ -13,6 +13,10 @@ public class IncidenceMatrix<V, E extends Number> implements Graph<V, E> {
     private int verticesCnt;
     private int edgesCnt;
     private HashMap<Vertex<V>, HashMap<Edge<V, E>, EdgeSideType>> matrix;
+
+    /**
+     * Edge types for maintaining directions.
+     */
     public enum EdgeSideType {
         END,
         START,
@@ -56,9 +60,7 @@ public class IncidenceMatrix<V, E extends Number> implements Graph<V, E> {
     @Override
     public void removeEdge(Edge<V, E> edge) {
         for (Vertex<V> vertex : matrix.keySet()) {
-            if (matrix.get(vertex).containsKey(edge)) {
-                matrix.get(vertex).remove(edge);
-            }
+            matrix.get(vertex).remove(edge);
         }
         edgesCnt--;
     }
