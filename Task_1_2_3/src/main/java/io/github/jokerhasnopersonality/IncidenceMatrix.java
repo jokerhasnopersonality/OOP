@@ -26,6 +26,7 @@ public class IncidenceMatrix<V, E extends Number> implements Graph<V, E> {
     public IncidenceMatrix() {
         matrix = new HashMap<>();
     }
+
     @Override
     public Vertex<V> addVertex(V value) {
         Vertex<V> newVertex = new Vertex<>(value);

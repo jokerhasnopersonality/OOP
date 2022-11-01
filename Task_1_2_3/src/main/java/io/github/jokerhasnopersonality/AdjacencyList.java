@@ -17,6 +17,7 @@ public class AdjacencyList<V, E extends Number> implements Graph<V, E> {
     public AdjacencyList() {
         map = new HashMap<>();
     }
+
     @Override
     public Vertex<V> addVertex(V value) {
         Vertex<V> newVertex = new Vertex<>(value);
@@ -44,7 +45,9 @@ public class AdjacencyList<V, E extends Number> implements Graph<V, E> {
 
     @Override
     public void removeEdge(Edge<V, E> edge) {
-        map.get(edge.getStart()).removeIf(t -> (t.getFirst().getEnd().getValue().equals(edge.getEnd().getValue())));
+        map.get(edge.getStart()).removeIf(t -> (
+                t.getFirst().getEnd().getValue().equals(edge.getEnd().getValue()))
+        );
         edgesCnt--;
     }
 

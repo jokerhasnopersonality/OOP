@@ -20,13 +20,15 @@ public class SortingAlgorithm<V> {
             sort.put(vertex.getValue(), java.lang.Integer.MAX_VALUE);
         }
         sort.replace(start.getValue(), 0);
+        int compare;
         for (int i = 0; i < graph.getVerticesCnt(); i++) {
             for (Edge<V, Integer> edge : graph.getEdges()) {
                 if (sort.get(edge.getStart().getValue()) == Integer.MAX_VALUE) {
                     continue;
                 }
-                if ((edge.getWeight() + sort.get(edge.getStart().getValue())) < sort.get(edge.getEnd().getValue())) {
-                    sort.replace(edge.getEnd().getValue(), edge.getWeight() + sort.get(edge.getStart().getValue()));
+                compare = edge.getWeight() + sort.get(edge.getStart().getValue());
+                if (compare < sort.get(edge.getEnd().getValue())) {
+                    sort.replace(edge.getEnd().getValue(), compare);
                 }
             }
         }
