@@ -1,14 +1,9 @@
 package io.github.jokerhasnopersonality;
 
-import java.util.Arrays;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import static java.util.stream.Collectors.toList;
 
 /**
  * Tests to check Graph realizations.
@@ -21,7 +16,8 @@ public class GraphTest {
         Assertions.assertThrows(NullPointerException.class, () -> graph.getVertex(null));
         Assertions.assertThrows(NullPointerException.class, () -> new Vertex<String>(null));
         Assertions.assertThrows(NullPointerException.class, () -> new Edge<>(null, null, 12));
-        Assertions.assertThrows(NullPointerException.class, () -> new Vertex<String>("A").setValue(null));
+        Assertions.assertThrows(NullPointerException.class, () ->
+                new Vertex<String>("A").setValue(null));
     }
 
     @Test

@@ -16,6 +16,9 @@ public class Vertex<V> {
         this.value = value;
     }
 
+    /**
+     * Sets new value for a vertex.
+     */
     public void setValue(V value) throws NullPointerException {
         if (value == null) {
             throw new NullPointerException();
