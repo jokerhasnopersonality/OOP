@@ -26,8 +26,8 @@
     catch(err) {
     }
 //-->
-var data = {"i0":2,"i1":2,"i2":2,"i3":1,"i4":2,"i5":2};
-var tabs = {65535:["t0","All Classes"],1:["t1","Interface Summary"],2:["t2","Class Summary"]};
+var data = {"i0":2,"i1":2,"i2":2,"i3":1,"i4":2,"i5":2,"i6":4,"i7":2,"i8":2};
+var tabs = {65535:["t0","All Classes"],1:["t1","Interface Summary"],2:["t2","Class Summary"],4:["t3","Enum Summary"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -103,34 +103,64 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul class="blockList">
 <li class="blockList">
 <table class="typeSummary">
-<caption><span id="t0" class="activeTableTab"><span>All Classes</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Interface Summary</a></span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Class Summary</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Classes</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Interface Summary</a></span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Class Summary</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Enum Summary</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Class</th>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><a href="io/github/jokerhasnopersonality/AdjacencyList.html" title="class in io.github.jokerhasnopersonality">AdjacencyList</a>&lt;<a href="io/github/jokerhasnopersonality/AdjacencyList.html" title="type parameter in AdjacencyList">V</a>,&#8203;<a href="io/github/jokerhasnopersonality/AdjacencyList.html" title="type parameter in AdjacencyList">E</a> extends java.lang.Number&gt;</td>
-<th class="colLast" scope="row">&nbsp;</th>
+<th class="colLast" scope="row">
+<div class="block">Graph realization supporting adjacency lists.</div>
+</th>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><a href="io/github/jokerhasnopersonality/AdjacencyMatrix.html" title="class in io.github.jokerhasnopersonality">AdjacencyMatrix</a>&lt;<a href="io/github/jokerhasnopersonality/AdjacencyMatrix.html" title="type parameter in AdjacencyMatrix">V</a>,&#8203;<a href="io/github/jokerhasnopersonality/AdjacencyMatrix.html" title="type parameter in AdjacencyMatrix">E</a> extends java.lang.Number&gt;</td>
-<th class="colLast" scope="row">&nbsp;</th>
+<th class="colLast" scope="row">
+<div class="block">Graph realization supporting adjacency matrix.</div>
+</th>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><a href="io/github/jokerhasnopersonality/Edge.html" title="class in io.github.jokerhasnopersonality">Edge</a>&lt;<a href="io/github/jokerhasnopersonality/Edge.html" title="type parameter in Edge">T</a> extends java.lang.Number&gt;</td>
-<th class="colLast" scope="row">&nbsp;</th>
+<td class="colFirst"><a href="io/github/jokerhasnopersonality/Edge.html" title="class in io.github.jokerhasnopersonality">Edge</a>&lt;<a href="io/github/jokerhasnopersonality/Edge.html" title="type parameter in Edge">V</a>,&#8203;<a href="io/github/jokerhasnopersonality/Edge.html" title="type parameter in Edge">E</a> extends java.lang.Number&gt;</td>
+<th class="colLast" scope="row">
+<div class="block">Class representing edges for Graph class.</div>
+</th>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><a href="io/github/jokerhasnopersonality/Graph.html" title="interface in io.github.jokerhasnopersonality">Graph</a>&lt;<a href="io/github/jokerhasnopersonality/Graph.html" title="type parameter in Graph">V</a>,&#8203;<a href="io/github/jokerhasnopersonality/Graph.html" title="type parameter in Graph">E</a> extends java.lang.Number&gt;</td>
-<th class="colLast" scope="row">&nbsp;</th>
+<th class="colLast" scope="row">
+<div class="block">Graph interface for graph realizations.</div>
+</th>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><a href="io/github/jokerhasnopersonality/IncidenceMatrix.html" title="class in io.github.jokerhasnopersonality">IncidenceMatrix</a>&lt;<a href="io/github/jokerhasnopersonality/IncidenceMatrix.html" title="type parameter in IncidenceMatrix">V</a>,&#8203;<a href="io/github/jokerhasnopersonality/IncidenceMatrix.html" title="type parameter in IncidenceMatrix">E</a> extends java.lang.Number&gt;</td>
-<th class="colLast" scope="row">&nbsp;</th>
+<td class="colFirst"><a href="io/github/jokerhasnopersonality/GraphReader.html" title="class in io.github.jokerhasnopersonality">GraphReader</a></td>
+<th class="colLast" scope="row">
+<div class="block">GraphReader class for readings graphs from text files.</div>
+</th>
 </tr>
 <tr id="i5" class="rowColor">
+<td class="colFirst"><a href="io/github/jokerhasnopersonality/IncidenceMatrix.html" title="class in io.github.jokerhasnopersonality">IncidenceMatrix</a>&lt;<a href="io/github/jokerhasnopersonality/IncidenceMatrix.html" title="type parameter in IncidenceMatrix">V</a>,&#8203;<a href="io/github/jokerhasnopersonality/IncidenceMatrix.html" title="type parameter in IncidenceMatrix">E</a> extends java.lang.Number&gt;</td>
+<th class="colLast" scope="row">
+<div class="block">Graph realization supporting incidence matrix.</div>
+</th>
+</tr>
+<tr id="i6" class="altColor">
+<td class="colFirst"><a href="io/github/jokerhasnopersonality/IncidenceMatrix.EdgeSideType.html" title="enum in io.github.jokerhasnopersonality">IncidenceMatrix.EdgeSideType</a></td>
+<th class="colLast" scope="row">
+<div class="block">Edge types for maintaining directions.</div>
+</th>
+</tr>
+<tr id="i7" class="rowColor">
+<td class="colFirst"><a href="io/github/jokerhasnopersonality/SortingAlgorithm.html" title="class in io.github.jokerhasnopersonality">SortingAlgorithm</a>&lt;<a href="io/github/jokerhasnopersonality/SortingAlgorithm.html" title="type parameter in SortingAlgorithm">V</a>&gt;</td>
+<th class="colLast" scope="row">
+<div class="block">Sorting algorithm for graphs.</div>
+</th>
+</tr>
+<tr id="i8" class="altColor">
 <td class="colFirst"><a href="io/github/jokerhasnopersonality/Vertex.html" title="class in io.github.jokerhasnopersonality">Vertex</a>&lt;<a href="io/github/jokerhasnopersonality/Vertex.html" title="type parameter in Vertex">V</a>&gt;</td>
-<th class="colLast" scope="row">&nbsp;</th>
+<th class="colLast" scope="row">
+<div class="block">Class for representing vertex in Graph class.</div>
+</th>
 </tr>
 </table>
 </li>
