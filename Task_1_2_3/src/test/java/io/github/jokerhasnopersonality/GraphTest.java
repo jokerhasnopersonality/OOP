@@ -12,12 +12,10 @@ public class GraphTest {
     @Test
     public void test0() {
         Graph<String, Integer> graph = new AdjacencyMatrix<>();
-        try {
-            graph.addEdge(null, null, 9);
-        } catch (NullPointerException thrown) {}
-        try {
-            graph.getVertex(null);
-        } catch (NullPointerException thrown) {}
+        Assertions.assertThrows(NullPointerException.class, () -> graph.addEdge(null, null, 9));
+        Assertions.assertThrows(NullPointerException.class, () -> graph.getVertex(null));
+        Assertions.assertThrows(NullPointerException.class, () -> new Vertex<>(null));
+        Assertions.assertThrows(NullPointerException.class, () -> new Edge<>(null, null, 12));
     }
 
     @Test
@@ -56,7 +54,6 @@ public class GraphTest {
         String path = "/Graph.txt";
         GraphReader.graphReader(graph, path);
         Vertex<String> v1 = graph.getVertex("C");
-        Map<String, Integer> testSort = SortingAlgorithm.sort(v1, graph);
         Map<String, Integer> expectedSort = new HashMap<>();
         expectedSort.put("C", 0);
         expectedSort.put("D", 2);
@@ -65,6 +62,7 @@ public class GraphTest {
         expectedSort.put("G", 9);
         expectedSort.put("B", 10);
         expectedSort.put("A", 14);
+        Map<String, Integer> testSort = SortingAlgorithm.sort(v1, graph);
         Assertions.assertEquals(expectedSort, testSort);
     }
 }
