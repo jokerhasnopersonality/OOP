@@ -1,9 +1,14 @@
 package io.github.jokerhasnopersonality;
 
+import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import static java.util.stream.Collectors.toList;
 
 /**
  * Tests to check Graph realizations.
@@ -14,8 +19,9 @@ public class GraphTest {
         Graph<String, Integer> graph = new AdjacencyMatrix<>();
         Assertions.assertThrows(NullPointerException.class, () -> graph.addEdge(null, null, 9));
         Assertions.assertThrows(NullPointerException.class, () -> graph.getVertex(null));
-        Assertions.assertThrows(NullPointerException.class, () -> new Vertex<>(null));
+        Assertions.assertThrows(NullPointerException.class, () -> new Vertex<String>(null));
         Assertions.assertThrows(NullPointerException.class, () -> new Edge<>(null, null, 12));
+        Assertions.assertThrows(NullPointerException.class, () -> new Vertex<String>("A").setValue(null));
     }
 
     @Test
@@ -39,13 +45,82 @@ public class GraphTest {
         Assertions.assertEquals("B", v2.getValue());
         Assertions.assertEquals(5, graph.getEdge(v1, v2).getWeight());
 
-        graph = new AdjacencyMatrix<>();
+        graph = new AdjacencyList<>();
         GraphReader.graphReader(graph, path);
         v1 = graph.getVertex("A");
         v2 = graph.getVertex("B");
         Assertions.assertEquals("A", v1.getValue());
         Assertions.assertEquals("B", v2.getValue());
         Assertions.assertEquals(5, graph.getEdge(v1, v2).getWeight());
+    }
+
+    @Test
+    public void testAdjacencyMatrix() {
+        AdjacencyMatrix<String, Integer> graph = new AdjacencyMatrix<>();
+        Vertex<String> a = graph.addVertex("A");
+        Vertex<String> b = graph.addVertex("B");
+        Vertex<String> c = graph.addVertex("C");
+        Vertex<String> d = graph.addVertex("D");
+        Vertex<String> e = graph.addVertex("E");
+        Vertex<String> f = graph.addVertex("F");
+        graph.addEdge(a, b, 3);
+        graph.addEdge(a, c, 6);
+        graph.addEdge(a, e, 9);
+        graph.addEdge(a, d, 1);
+        graph.addEdge(b, e, 5);
+        graph.addEdge(e, c, 2);
+        graph.addEdge(c, f, 7);
+        for (Edge<String, Integer> edge : graph.getEdges()) {
+            Assertions.assertTrue(graph.getEdges().contains(edge));
+        }
+        Assertions.assertEquals(6, graph.getVerticesCnt());
+        Assertions.assertEquals(7, graph.getEdgesCnt());
+    }
+
+    @Test
+    public void testIncidenceMatrix() {
+        IncidenceMatrix<String, Integer> graph = new IncidenceMatrix<>();
+        Vertex<String> a = graph.addVertex("A");
+        Vertex<String> b = graph.addVertex("B");
+        Vertex<String> c = graph.addVertex("C");
+        Vertex<String> d = graph.addVertex("D");
+        Vertex<String> e = graph.addVertex("E");
+        Vertex<String> f = graph.addVertex("F");
+        graph.addEdge(a, b, 3);
+        graph.addEdge(a, c, 6);
+        graph.addEdge(a, e, 9);
+        graph.addEdge(a, d, 1);
+        graph.addEdge(b, e, 5);
+        graph.addEdge(e, c, 2);
+        graph.addEdge(c, f, 7);
+        for (Edge<String, Integer> edge : graph.getEdges()) {
+            Assertions.assertTrue(graph.getEdges().contains(edge));
+        }
+        Assertions.assertEquals(6, graph.getVerticesCnt());
+        Assertions.assertEquals(7, graph.getEdgesCnt());
+    }
+
+    @Test
+    public void testAdjacencyList() {
+        AdjacencyList<String, Integer> graph = new AdjacencyList<>();
+        Vertex<String> a = graph.addVertex("A");
+        Vertex<String> b = graph.addVertex("B");
+        Vertex<String> c = graph.addVertex("C");
+        Vertex<String> d = graph.addVertex("D");
+        Vertex<String> e = graph.addVertex("E");
+        Vertex<String> f = graph.addVertex("F");
+        graph.addEdge(a, b, 3);
+        graph.addEdge(a, c, 6);
+        graph.addEdge(a, e, 9);
+        graph.addEdge(a, d, 1);
+        graph.addEdge(b, e, 5);
+        graph.addEdge(e, c, 2);
+        graph.addEdge(c, f, 7);
+        for (Edge<String, Integer> edge : graph.getEdges()) {
+            Assertions.assertTrue(graph.getEdges().contains(edge));
+        }
+        Assertions.assertEquals(6, graph.getVerticesCnt());
+        Assertions.assertEquals(7, graph.getEdgesCnt());
     }
 
     @Test
@@ -63,6 +138,14 @@ public class GraphTest {
         expectedSort.put("B", 10);
         expectedSort.put("A", 14);
         Map<String, Integer> testSort = SortingAlgorithm.sort(v1, graph);
+        Assertions.assertEquals(expectedSort, testSort);
+        Edge<String, Integer> edge = graph.getEdge(
+                graph.getVertex("E"),
+                graph.getVertex("G")
+        );
+        graph.removeEdge(edge);
+        testSort = SortingAlgorithm.sort(v1, graph);
+        expectedSort.replace("G", 10);
         Assertions.assertEquals(expectedSort, testSort);
     }
 }
