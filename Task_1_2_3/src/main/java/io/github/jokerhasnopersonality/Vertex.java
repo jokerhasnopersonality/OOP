@@ -16,7 +16,10 @@ public class Vertex<V> {
         this.value = value;
     }
 
-    public void setValue(V value) {
+    public void setValue(V value) throws NullPointerException {
+        if (value == null) {
+            throw new NullPointerException();
+        }
         this.value = value;
     }
 
