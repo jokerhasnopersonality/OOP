@@ -19,8 +19,7 @@ public class IncidenceMatrix<V, E extends Number> implements Graph<V, E> {
      */
     public enum EdgeSideType {
         END,
-        START,
-        UNDIRECTED
+        START
     }
 
     public IncidenceMatrix() {
@@ -46,14 +45,9 @@ public class IncidenceMatrix<V, E extends Number> implements Graph<V, E> {
     public Edge<V, E> addEdge(Vertex<V> v1, Vertex<V> v2, E weight) {
         Edge<V, E> newEdge;
         newEdge = this.getEdge(v2, v1);
-        if (newEdge != null && newEdge.getWeight().equals(weight)) {
-            matrix.get(v1).replace(newEdge, EdgeSideType.UNDIRECTED);
-            matrix.get(v2).replace(newEdge, EdgeSideType.UNDIRECTED);
-        } else {
-            newEdge = new Edge<>(v1, v2, weight);
-            matrix.get(v1).put(newEdge, EdgeSideType.START);
-            matrix.get(v2).put(newEdge, EdgeSideType.END);
-        }
+        newEdge = new Edge<>(v1, v2, weight);
+        matrix.get(v1).put(newEdge, EdgeSideType.START);
+        matrix.get(v2).put(newEdge, EdgeSideType.END);
         edgesCnt++;
         return newEdge;
     }
@@ -82,7 +76,7 @@ public class IncidenceMatrix<V, E extends Number> implements Graph<V, E> {
     @Override
     public Edge<V, E> getEdge(Vertex<V> start, Vertex<V> end) {
         for (Edge<V, E> edge : matrix.get(start).keySet()) {
-            if (edge.getEnd().getValue().equals(end.getValue())) {
+            if (matrix.get(start).get(edge).equals(EdgeSideType.START)) {
                 return edge;
             }
         }
@@ -91,7 +85,7 @@ public class IncidenceMatrix<V, E extends Number> implements Graph<V, E> {
 
     @Override
     public List<Vertex<V>> getVertices() {
-        List<Vertex<V>> vertices = new ArrayList<Vertex<V>>(matrix.keySet());
+        List<Vertex<V>> vertices = new ArrayList<>(matrix.keySet());
         return vertices;
     }
 
