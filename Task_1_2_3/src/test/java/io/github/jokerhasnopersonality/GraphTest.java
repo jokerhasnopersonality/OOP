@@ -26,7 +26,7 @@ public class GraphTest {
 
     @Test
     public void graphReaderTest() {
-        String path = "C:\\Users\\37730\\OOP\\Task_1_2_3\\src\\main\\resources\\Graph.txt";
+        String path = "/Graph.txt";
         Graph<String, Integer> graph = new AdjacencyMatrix<>();
         GraphReader.graphReader(graph, path);
         Vertex<String> v1;
@@ -57,7 +57,7 @@ public class GraphTest {
     @Test
     public void simpleTest() {
         Graph<String, Integer> graph = new AdjacencyList<>();
-        String path = "C:\\Users\\37730\\OOP\\Task_1_2_3\\src\\main\\resources\\Graph.txt";
+        String path = "/Graph.txt";
         GraphReader.graphReader(graph, path);
         Vertex<String> v1 = graph.getVertex("C");
         Map<String, Integer> testSort = SortingAlgorithm.sort(v1, graph);
