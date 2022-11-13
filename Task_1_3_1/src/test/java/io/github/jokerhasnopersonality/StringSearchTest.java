@@ -17,26 +17,26 @@ public class StringSearchTest {
         Assertions.assertThrows(NullPointerException.class, () -> StringSearch.search(null,
                 StringSearch.class.getResourceAsStream(path)));
         Assertions.assertThrows(NullPointerException.class,
-                () -> StringSearch.search("dreams", null));
+                () -> StringSearch.search("logo", null));
     }
 
     @Test
     public void test1() throws IOException {
         String path = "/Test1.txt";
         InputStream in = StringSearch.class.getResourceAsStream(path);
-        List<Integer> indexes = StringSearch.search("dreams", in);
-        List<Integer> test = List.of(6, 265);
-        Assertions.assertEquals(2, indexes.size());
+        List<Integer> indexes = StringSearch.search("logo", in);
+        List<Integer> test = List.of(352, 582, 935, 1164, 1308, 1375);
+        Assertions.assertEquals(6, indexes.size());
         Assertions.assertEquals(test, indexes);
         in.close();
         InputStream in2 = in;
         Assertions.assertThrows(IOException.class, () -> StringSearch.search("dreams", in2));
 
         in = StringSearch.class.getResourceAsStream(path);
-        indexes = StringSearch.search("to", in);
-        test = List.of(39, 148, 177, 214, 245, 298);
+        indexes = StringSearch.search("eye", in);
+        test = List.of(88, 165, 478, 1031, 1072);
         assert indexes != null;
-        Assertions.assertEquals(6, indexes.size());
+        Assertions.assertEquals(5, indexes.size());
         Assertions.assertEquals(test, indexes);
         in.close();
 
