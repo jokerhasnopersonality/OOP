@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
  */
 public class StringSearchTest {
     @Test
-    public void test0() throws IOException {
+    public void test0() {
         String path = "/Test1.txt";
         Assertions.assertThrows(NullPointerException.class, () -> StringSearch.search(null,
                 StringSearch.class.getResourceAsStream(path)));
@@ -29,6 +29,8 @@ public class StringSearchTest {
         Assertions.assertEquals(2, indexes.size());
         Assertions.assertEquals(test, indexes);
         in.close();
+        InputStream in2 = in;
+        Assertions.assertThrows(IOException.class, () -> StringSearch.search("dreams", in2));
 
         in = StringSearch.class.getResourceAsStream(path);
         indexes = StringSearch.search("to", in);
