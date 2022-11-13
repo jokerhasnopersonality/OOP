@@ -1,0 +1,1 @@
+memberSearchIndex = [{"p":"io.github.jokerhasnopersonality","c":"StringSearch","l":"search(String, InputStream)","url":"search(java.lang.String,java.io.InputStream)"},{"p":"io.github.jokerhasnopersonality","c":"StringSearch","l":"StringSearch()","url":"%3Cinit%3E()"}]
