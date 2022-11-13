@@ -39,6 +39,9 @@ public class StringSearchTest {
         Assertions.assertEquals(6, indexes.size());
         Assertions.assertEquals(test, indexes);
         in.close();
+
+        in = StringSearch.class.getResourceAsStream(path);
+        Assertions.assertNull(StringSearch.search("", in));
     }
 
     @Test
