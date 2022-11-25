@@ -38,7 +38,8 @@ public class StringSearch {
 
         BufferedReader reader = new BufferedReader(
                 new InputStreamReader(in, StandardCharsets.UTF_8));
-        int[] zline = zfunction(substring.toCharArray(), substring.toCharArray(), new int [len], len);
+        int[] zline = zfunction(substring.toCharArray(),
+                substring.toCharArray(), new int [len], len);
         int pos = max(len, 512);
         char[] curr = new char[pos];
         int off = 0;
