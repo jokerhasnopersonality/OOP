@@ -38,14 +38,14 @@ public class StringSearch {
 
         BufferedReader reader = new BufferedReader(
                 new InputStreamReader(in, StandardCharsets.UTF_8));
-        int[] zline = zline(substring);
+        int[] zline = zfunction(substring.toCharArray(), substring.toCharArray(), new int [len], len);
         int pos = max(len, 512);
         char[] curr = new char[pos];
         int off = 0;
         int f = reader.read(curr, off, pos);
         int[] zz = zfunction(curr, substring.toCharArray(), zline, f);
 
-        ArrayList<Integer> indexes = new ArrayList<>();
+        List<Integer> indexes = new ArrayList<>();
         int cnt = 0;
         for (int i = 0; i < zz.length; i++) {
             if (zz[i] == len) {
@@ -78,50 +78,26 @@ public class StringSearch {
     }
 
     /**
-     * Builds the z function of the given substring.
-     *
-     * @return array of integers representing z function
-     */
-    private static int[] zline(String substring) {
-        int[] z = new int[substring.length()];
-        int n = substring.length();
-        int l = 0;
-        int r = 0;
-        for (int i = 0; i < n; i++) {
-            if (i <= r) {
-                z[i] = min(r - i + 1, z[i - l]);
-            }
-            while (i + z[i] < n && substring.charAt(z[i]) == substring.charAt(i + z[i])) {
-                z[i]++;
-            }
-            if (i + z[i] - 1 > r) {
-                l = i;
-                r = i + z[i] - 1;
-            }
-        }
-        return z;
-    }
-
-    /**
      * Builds the z function of a line using z function of the given substring.
      *
      * @param line line to build z function of
      * @param substr substring to look for
      * @param zline z function of a substring
-     * @param f number of characters read
+     * @param n number of characters read
      * @return array of integers representing z function of a line
      */
-    private static int[] zfunction(char[] line, char[] substr, int[] zline, int f) {
+    private static int[] zfunction(char[] line, char[] substr, int[] zline, int n) {
         int[] zz = new int[line.length];
         int l = -1;
         int r = -1;
-        for (int i = 0; i < f; i++) {
+        for (int i = 0; i < n; i++) {
             if (i < r) {
                 zz[i] = zline[i - l];
             } else {
                 zz[i] = 0;
             }
-            while (zz[i] < zline.length
+            // zz[i] < zline.length
+            while (zz[i] < substr.length
                     && i + zz[i] < line.length && substr[zz[i]] == line[i + zz[i]]) {
                 zz[i]++;
             }
