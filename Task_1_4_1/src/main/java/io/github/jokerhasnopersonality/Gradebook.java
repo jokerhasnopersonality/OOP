@@ -9,8 +9,9 @@ import java.util.Map;
  */
 public class Gradebook {
     private final int id;
-    private HashMap<Integer, HashMap<String, Subject>> subjects;
+    private Map<Integer, Map<String, Subject>> subjects;
     private double gradePointAverage;
+    int currentSemester;
 
     public Gradebook(int id) {
         this.id = id;
@@ -31,5 +32,9 @@ public class Gradebook {
 
     public boolean increasedStipend() {
         return false;
+    }
+
+    public void setGrade() {
+
     }
 }
