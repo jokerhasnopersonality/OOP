@@ -7,7 +7,7 @@ public class Grade {
        3 - Satisfactory,
        2 - Unsatisfactory.
        For PASS type evaluation system is:
-       1 - Pass,
+       5 - Pass,
        0 - Fail.
      */
     public enum EvaluationType {
@@ -19,7 +19,7 @@ public class Grade {
     private int grade;
     public Grade(EvaluationType type, int grade) throws IllegalStateException {
         if ((grade < 0 || grade > 5) || (type == null)
-                || (type == EvaluationType.PASS && grade > 1)
+                || (type == EvaluationType.PASS && grade != 0 && grade != 5)
                 || (type != EvaluationType.PASS && grade < 2)) {
             throw new IllegalStateException("Grade or Evaluation type is incorrect.");
         }
@@ -27,16 +27,11 @@ public class Grade {
         this.grade = grade;
     }
 
-    public int getGrade() {
+    public int getValue() {
         return grade;
     }
 
-    public void setGrade(int grade) throws IllegalStateException {
-        if ((grade < 0 || grade > 5)
-                || (type == EvaluationType.PASS && grade > 1)
-                || (type != EvaluationType.PASS && grade < 2)) {
-            throw new IllegalStateException("Grade type is incorrect.");
-        }
-        this.grade = grade;
+    public EvaluationType getEvaluationType() {
+        return type;
     }
 }
