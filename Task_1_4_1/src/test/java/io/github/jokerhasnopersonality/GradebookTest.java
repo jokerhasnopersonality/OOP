@@ -28,6 +28,10 @@ public class GradebookTest {
         Assertions.assertEquals(1, gradebook.getCurrentSemester());
 
     }
+
+    /**
+     * Data for testing gradebook methods.
+     */
     public void testData() {
         gradebook = new Gradebook(210637);
         gradebook.putGrade(1, "Physical education",
@@ -61,6 +65,7 @@ public class GradebookTest {
         gradebook.putDiplomaGrade(2, "Discrete Math",
                 Grade.EvaluationType.EXAM, 4);
     }
+
     @Test
     public void simpleTest() {
         testData();
