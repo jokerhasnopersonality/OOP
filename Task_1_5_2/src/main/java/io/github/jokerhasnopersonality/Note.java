@@ -4,16 +4,19 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.StdArraySerializers;
 
-import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 public class Note {
     private final String title;
     private final String note;
-    private final Instant time;
+    @JsonFormat(pattern = "dd.MM.yyyy HH:mm", timezone = "VST")
+    private final LocalDateTime time;
 
-    public Note(String title, String note, Instant time) {
+    public Note(String title, String note, LocalDateTime time) {
         this.title = title;
         this.note = note;
         this.time = time;
@@ -27,7 +30,7 @@ public class Note {
         return note;
     }
 
-    public Instant getTime() {
+    public LocalDateTime getTime() {
         return time;
     }
 
