@@ -4,14 +4,20 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 
 
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,7 +34,7 @@ public class Notebook {
     }
 
     public void addNote(String title, String note) {
-        Note add = new Note(title, note, Instant.now());
+        Note add = new Note(title, note, LocalDateTime.now());
         notes.add(add);
     }
 
@@ -40,7 +46,7 @@ public class Notebook {
         return notes;
     }
 
-    public List<Note> getNotes(Instant since, Instant till, String[] keywords) {
+    public List<Note> getNotes(LocalDateTime since, LocalDateTime till, String[] keywords) {
         return notes.stream().filter(
                 x -> x.getTime().isAfter(since)
                 && x.getTime().isBefore(till)
