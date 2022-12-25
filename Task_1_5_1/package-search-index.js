@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"io.github.jokerhasnopersonality"},{"l":"io.github.jokerhasnopersonality.operations"}]
