@@ -1,134 +1,69 @@
 package io.github.jokerhasnopersonality;
 
+import io.github.jokerhasnopersonality.operations.Operation;
+import java.util.List;
 import java.util.Scanner;
 import java.util.Stack;
 
+/**
+ * Calculator class for mathematical expressions in prefix form.
+ */
 public class Calculator {
-    public enum Operations {
-        PLUS,
-        MINUS,
-        MULTIPLY,
-        DIVIDE,
-        LOG,
-        POW,
-        SQRT,
-        SIN,
-        COS
-    }
-
-    private int required;
-    private Stack<Double> numbers;
-    private Stack<Operations> stack;
-
-    public Double calc(String expression) throws AssertionError {
-        required = 0;
-        numbers = new Stack<>();
-        stack = new Stack<>();
+    /**
+     * Method for calculating a given prefix-expression.
+     * After operation is read and identified, method searches the required
+     * amount of numbers to execute an operation(1 or 2 operands).
+     */
+    public static Double calculate(String expression) {
+        Stack<Double> numbers = new Stack<>();
+        Stack<Operation> stack = new Stack<>();
+        int required = 0;
         Scanner scanner = new Scanner(expression);
-        String curr;
 
-        while(scanner.hasNext()) {
-            if (scanner.hasNextDouble()) {
+        Operation operation = null;
+        Double number;
+        List<Double> sublist;
+        int cnt = 0;                 //for counting numbers after the last read operation
+        while (scanner.hasNext()) {
+            cnt++;
+            if (scanner.hasNext("e")) {
+                numbers.push(Math.E);
+                scanner.next();
+            } else if (scanner.hasNext("pi")) {
+                numbers.push(Math.PI);
+                scanner.next();
+            } else if (scanner.hasNextDouble()) {
                 numbers.push(scanner.nextDouble());
             } else {
-                curr = scanner.next();
-                switch (curr) {
-                    case ("+"):
-                        stack.push(Operations.PLUS);
-                        required = 2;
-                        break;
-                    case ("-"):
-                        stack.push(Operations.MINUS);
-                        required = 2;
-                        break;
-                    case ("*"):
-                        stack.push(Operations.MULTIPLY);
-                        required = 2;
-                        break;
-                    case ("/"):
-                        stack.push(Operations.DIVIDE);
-                        required = 2;
-                        break;
-                    case ("pow"):
-                        stack.push(Operations.POW);
-                        required = 2;
-                        break;
-                    case ("log"):
-                        stack.push(Operations.LOG);
-                        required = 1;
-                        break;
-                    case ("sqrt"):
-                        stack.push(Operations.SQRT);
-                        required = 1;
-                        break;
-                    case ("sin"):
-                        stack.push(Operations.SIN);
-                        required = 1;
-                        break;
-                    case ("cos"):
-                        stack.push(Operations.COS);
-                        required = 1;
-                        break;
-                    default:
-                        throw new AssertionError();
-                }
+                operation = OperationFactory.getOperation(scanner.next());
+                stack.push(operation);
+                required = operation.getRequiredCount();
+                cnt = 0;
             }
-
-            if (required == numbers.size()) {
-                execute(required);
+            while (stack.size() > 1 && required <= numbers.size() && cnt >= required) {
+                sublist = numbers.subList(numbers.size() - required, numbers.size());
+                number = operation.calculate(sublist);
+                sublist.clear();
+                numbers.push(number);
+                stack.pop();
+                required = stack.peek().getRequiredCount();
+                operation = stack.peek();
+            }
+        }
+        if (stack.size() > 0 && numbers.size() > 0) {
+           if (required <= numbers.size() && cnt >= required) {
+                sublist = numbers.subList(numbers.size() - required, numbers.size());
+                number = operation.calculate(sublist);
+                sublist.clear();
+                numbers.push(number);
+                stack.pop();
             }
         }
 
         scanner.close();
+        if (numbers.size() != 1) {
+            throw new IllegalStateException("Expression is not valid.");
+        }
         return numbers.pop();
-    }
-
-    private void execute(int operands) {
-        Double b = numbers.pop();
-        Operations operation = stack.pop();
-        if (operands == 2) {
-            Double a = numbers.pop();
-            switch (operation) {
-                case PLUS:
-                    b = a + b;
-                    break;
-                case MINUS:
-                    b = a - b;
-                    break;
-                case MULTIPLY:
-                    b = a * b;
-                    break;
-                case DIVIDE:
-                    b = a / b;
-                    break;
-                case POW:
-                    b = Math.pow(a, b);
-                    break;
-            }
-        } else if (operands == 1) {
-            switch (operation) {
-                case LOG:
-                    b = Math.log(b);
-                    break;
-                case SQRT:
-                    b = Math.sqrt(b);
-                    break;
-                case SIN:
-                    b = Math.sin(b);
-                    break;
-                case COS:
-                    b = Math.cos(b);
-                    break;
-            }
-        }
-        operation = stack.peek();
-        if (operation==Operations.LOG || operation==Operations.SQRT
-                || operation==Operations.SIN || operation == Operations.COS) {
-            required = 1;
-        } else {
-            required = 2;
-        }
-
-        numbers.push(b);
     }
 }
