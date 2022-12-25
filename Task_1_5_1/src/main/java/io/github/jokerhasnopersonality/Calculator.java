@@ -51,7 +51,7 @@ public class Calculator {
             }
         }
         if (stack.size() > 0 && numbers.size() > 0) {
-           if (required <= numbers.size() && cnt >= required) {
+            if (required <= numbers.size() && cnt >= required) {
                 sublist = numbers.subList(numbers.size() - required, numbers.size());
                 number = operation.calculate(sublist);
                 sublist.clear();

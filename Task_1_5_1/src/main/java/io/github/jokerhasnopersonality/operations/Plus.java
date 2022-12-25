@@ -2,8 +2,12 @@ package io.github.jokerhasnopersonality.operations;
 
 import java.util.List;
 
+/**
+ * Plus function.
+ */
 public class Plus implements Operation {
     private final int required = 2;
+
     @Override
     public Double calculate(List<Double> args) throws NullPointerException, IllegalStateException {
         if (args == null) {
