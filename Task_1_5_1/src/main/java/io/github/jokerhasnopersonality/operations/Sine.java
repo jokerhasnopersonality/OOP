@@ -2,6 +2,9 @@ package io.github.jokerhasnopersonality.operations;
 
 import java.util.List;
 
+/**
+ * Sine function.
+ */
 public class Sine implements Operation {
     private final int required = 1;
 

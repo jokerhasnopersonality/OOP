@@ -2,6 +2,9 @@ package io.github.jokerhasnopersonality.operations;
 
 import java.util.List;
 
+/**
+ * Power function.
+ */
 public class Power implements Operation {
     private final int required = 2;
 

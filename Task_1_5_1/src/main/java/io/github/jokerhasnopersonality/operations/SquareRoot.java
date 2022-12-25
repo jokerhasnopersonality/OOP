@@ -2,6 +2,9 @@ package io.github.jokerhasnopersonality.operations;
 
 import java.util.List;
 
+/**
+ * Square root function.
+ */
 public class SquareRoot implements Operation {
     private final int required = 1;
 
