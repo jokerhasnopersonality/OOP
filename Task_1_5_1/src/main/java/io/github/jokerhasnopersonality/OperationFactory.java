@@ -14,12 +14,13 @@ import io.github.jokerhasnopersonality.operations.Sine;
 import io.github.jokerhasnopersonality.operations.SquareRoot;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * Factory for identifying supported operations.
  */
 public class OperationFactory {
-    static HashMap<String, Operation> map = new HashMap<>(Map.ofEntries(
+    private static final HashMap<String, Operation> map = new HashMap<>(Map.ofEntries(
             entry("+", new Plus()),
             entry("-", new Minus()),
             entry("*", new Multiply()),
@@ -36,10 +37,7 @@ public class OperationFactory {
 
      * @throws IllegalStateException if an operation can't be identified
      */
-    public static Operation getOperation(String op) throws IllegalStateException {
-        if (map.get(op) == null) {
-            throw new IllegalStateException("Operation is not supported.");
-        }
-        return map.get(op);
+    public static Optional<Operation> getOperation(String op) throws IllegalStateException {
+        return Optional.ofNullable(map.get(op));
     }
 }
