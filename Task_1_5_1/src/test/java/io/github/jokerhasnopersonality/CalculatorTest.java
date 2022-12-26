@@ -12,7 +12,7 @@ public class CalculatorTest {
         Assertions.assertThrows(NullPointerException.class, () -> Calculator.calculate(null));
         Assertions.assertThrows(IllegalStateException.class, () -> Calculator.calculate(""));
         Assertions.assertThrows(IllegalStateException.class, () -> Calculator.calculate("sin"));
-        Assertions.assertThrows(IllegalStateException.class, () -> Calculator.calculate("hehe"));
+        Assertions.assertThrows(NullPointerException.class, () -> Calculator.calculate("hehe"));
         Assertions.assertThrows(IllegalStateException.class, () -> Calculator.calculate("3 2"));
         Assertions.assertThrows(IllegalStateException.class, () -> Calculator.calculate(
                 "+ 1 2 cos 0 1"));
