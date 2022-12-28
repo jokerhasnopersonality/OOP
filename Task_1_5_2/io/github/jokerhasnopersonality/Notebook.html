@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -132,6 +132,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <hr>
 <pre>public class <span class="typeNameLabel">Notebook</span>
 extends java.lang.Object</pre>
+<div class="block">Notebook class for managing a single json file representing a notebook.</div>
 </li>
 </ul>
 </div>
@@ -153,7 +154,9 @@ extends java.lang.Object</pre>
 </tr>
 <tr class="altColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E()">Notebook</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Notebook constructor.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -189,21 +192,31 @@ extends java.lang.Object</pre>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getNotes(java.time.LocalDateTime,java.time.LocalDateTime,java.lang.String%5B%5D)">getNotes</a></span>&#8203;(java.time.LocalDateTime&nbsp;since,
         java.time.LocalDateTime&nbsp;till,
         java.lang.String[]&nbsp;keywords)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">If time boundaries and keywords are specified,
+ getNotes returns a filtered list of notes.</div>
+</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#loadNotes(java.lang.String)">loadNotes</a></span>&#8203;(java.lang.String&nbsp;string)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#loadNotes()">loadNotes</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeNote(java.lang.String)">removeNote</a></span>&#8203;(java.lang.String&nbsp;title)</code></th>
-<td class="colLast">&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#prettyPrint(java.util.List)">prettyPrint</a></span>&#8203;(java.util.List&lt;<a href="Note.html" title="class in io.github.jokerhasnopersonality">Note</a>&gt;&nbsp;notes)</code></th>
+<td class="colLast">
+<div class="block">Outputs the specified list of notes using default PrettyPrint method.</div>
+</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#saveNotes(java.lang.String)">saveNotes</a></span>&#8203;(java.lang.String&nbsp;string)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeNote(java.lang.String)">removeNote</a></span>&#8203;(java.lang.String&nbsp;title)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i6" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#saveNotes()">saveNotes</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -237,6 +250,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>Notebook</h4>
 <pre>public&nbsp;Notebook()</pre>
+<div class="block">Notebook constructor.</div>
 </li>
 </ul>
 </li>
@@ -286,15 +300,17 @@ extends java.lang.Object</pre>
 <pre class="methodSignature">public&nbsp;java.util.List&lt;<a href="Note.html" title="class in io.github.jokerhasnopersonality">Note</a>&gt;&nbsp;getNotes&#8203;(java.time.LocalDateTime&nbsp;since,
                                      java.time.LocalDateTime&nbsp;till,
                                      java.lang.String[]&nbsp;keywords)</pre>
+<div class="block">If time boundaries and keywords are specified,
+ getNotes returns a filtered list of notes.</div>
 </li>
 </ul>
-<a id="saveNotes(java.lang.String)">
+<a id="saveNotes()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>saveNotes</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;saveNotes&#8203;(java.lang.String&nbsp;string)
+<pre class="methodSignature">public&nbsp;void&nbsp;saveNotes()
                throws java.io.IOException</pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
@@ -302,17 +318,32 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a id="loadNotes(java.lang.String)">
+<a id="loadNotes()">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>loadNotes</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;loadNotes&#8203;(java.lang.String&nbsp;string)
+<pre class="methodSignature">public&nbsp;void&nbsp;loadNotes()
                throws java.io.IOException</pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>java.io.IOException</code></dd>
+</dl>
+</li>
+</ul>
+<a id="prettyPrint(java.util.List)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>prettyPrint</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;prettyPrint&#8203;(java.util.List&lt;<a href="Note.html" title="class in io.github.jokerhasnopersonality">Note</a>&gt;&nbsp;notes)
+                 throws com.fasterxml.jackson.core.JsonProcessingException</pre>
+<div class="block">Outputs the specified list of notes using default PrettyPrint method.</div>
+<dl>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code>com.fasterxml.jackson.core.JsonProcessingException</code></dd>
 </dl>
 </li>
 </ul>
