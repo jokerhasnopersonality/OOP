@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Callable;
 import picocli.CommandLine;
@@ -49,7 +50,7 @@ public class NotebookCommandLine implements Callable<Integer> {
                         DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"));
                 t = LocalDateTime.parse(keywords[1],
                         DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"));
-                list = notebook.getNotes(s, t, keywords);
+                list = notebook.getNotes(s, t, Arrays.copyOfRange(keywords, 2, keywords.length));
             } catch (DateTimeParseException e) {
                 throw new IllegalStateException("Couldn't parse time boundaries.");
             }
