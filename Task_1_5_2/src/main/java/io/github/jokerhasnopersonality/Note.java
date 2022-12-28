@@ -1,22 +1,24 @@
 package io.github.jokerhasnopersonality;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.ser.std.StdArraySerializers;
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
+/**
+ * Note class for Notebook realization.
+ */
 public class Note {
     private final String title;
     private final String note;
     @JsonFormat(pattern = "dd.MM.yyyy HH:mm", timezone = "VST")
     private final LocalDateTime time;
 
-    public Note(String title, String note, LocalDateTime time) {
+    /**
+     * Note constructor.
+     */
+    public Note(String title, String note, LocalDateTime time) throws NullPointerException {
+        if ((title == null) || (note == null) || (time == null)) {
+            throw new NullPointerException();
+        }
         this.title = title;
         this.note = note;
         this.time = time;
@@ -33,5 +35,4 @@ public class Note {
     public LocalDateTime getTime() {
         return time;
     }
-
 }
