@@ -1,30 +1,28 @@
 package io.github.jokerhasnopersonality;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
-
-
 import java.io.IOException;
 import java.nio.file.Paths;
-import java.sql.Time;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Notebook class for managing a single json file representing a notebook.
+ */
 public class Notebook {
-    private List<Note> notes;
-    private final ObjectMapper mapper;
+    private static List<Note> notes;
+    private static ObjectMapper mapper = null;
 
+    /**
+     * Notebook constructor.
+     */
     public Notebook() {
         notes = new ArrayList<>();
         mapper = JsonMapper.builder()
@@ -46,6 +44,10 @@ public class Notebook {
         return notes;
     }
 
+    /**
+     * If time boundaries and keywords are specified,
+     * getNotes returns a filtered list of notes.
+     */
     public List<Note> getNotes(LocalDateTime since, LocalDateTime till, String[] keywords) {
         return notes.stream().filter(
                 x -> x.getTime().isAfter(since)
@@ -55,11 +57,20 @@ public class Notebook {
         );
     }
 
-    public void saveNotes(String string) throws IOException {
-        mapper.writeValue(Paths.get(string).toFile(), notes);
+    public void saveNotes() throws IOException {
+        mapper.writeValue(Paths.get("notebook.json").toFile(), notes);
     }
 
-    public void loadNotes(String string) throws IOException {
-        notes = Arrays.asList(mapper.readValue(Paths.get(string).toFile(), Note[].class));
+    public void loadNotes() throws IOException {
+        notes = Arrays.asList(mapper.readValue(Paths.get("notebook.json").toFile(), Note[].class));
+    }
+
+    /**
+     * Outputs the specified list of notes using default PrettyPrint method.
+     */
+    public void prettyPrint(List<Note> notes) throws JsonProcessingException {
+        for (Note note : notes) {
+            System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(note));
+        }
     }
 }
