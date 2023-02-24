@@ -33,8 +33,8 @@ class NonPrimeCheckTest {
         result = new ParallelNonPrimeCheck(arr, 2).checkArray();
         Assertions.assertTrue(result);
 
-        arr = new int[] { 6997901, 6997927, 6997937, 6997967,
-                6998009, 6998029, 6998039, 6998051, 6998053 };
+        arr = new int[] { 6997901, 6997927, 6997937,
+                6997967, 6998009, 6998029, 6998039, 6998051, 6998053 };
         result = new ParallelStreamNonPrimeCheck(arr).checkArray();
         Assertions.assertFalse(result);
     }
