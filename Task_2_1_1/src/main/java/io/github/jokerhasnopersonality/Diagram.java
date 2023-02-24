@@ -1,6 +1,6 @@
 package io.github.jokerhasnopersonality;
 
-import java.awt.Color;
+import org.jfree.chart.ChartColor;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -56,13 +56,13 @@ public class Diagram extends ApplicationFrame {
                 false
         );
 
-        chart.setBackgroundPaint(Color.white);
+        chart.setBackgroundPaint(ChartColor.white);
 
         final XYPlot plot = chart.getXYPlot();
-        plot.setBackgroundPaint(Color.lightGray);
+        plot.setBackgroundPaint(ChartColor.lightGray);
 
-        plot.setDomainGridlinePaint(Color.gray);
-        plot.setRangeGridlinePaint(Color.gray);
+        plot.setDomainGridlinePaint(ChartColor.gray);
+        plot.setRangeGridlinePaint(ChartColor.gray);
 
         plot.setAxisOffset(new RectangleInsets(1.0, 1.0, 1.0, 1.0));
 
