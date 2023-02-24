@@ -12,9 +12,14 @@ import java.util.Scanner;
 import org.jfree.chart.ChartUtils;
 import org.jfree.chart.renderer.xy.XYSplineRenderer;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 class NonPrimeCheckTest {
+    @BeforeAll
+    public static void setupHeadlessMode() {
+        System.setProperty("java.awt.headless", "false");
+    }
     @Test
     public void nullTest() {
         Assertions.assertThrows(NullPointerException.class,
