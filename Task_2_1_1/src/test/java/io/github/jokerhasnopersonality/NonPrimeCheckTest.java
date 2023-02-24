@@ -1,25 +1,14 @@
 package io.github.jokerhasnopersonality;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
-import org.jfree.chart.ChartUtils;
-import org.jfree.chart.renderer.xy.XYSplineRenderer;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 class NonPrimeCheckTest {
-    @BeforeAll
-    public static void setupHeadlessMode() {
-        System.setProperty("java.awt.headless", "false");
-    }
     @Test
     public void nullTest() {
         Assertions.assertThrows(NullPointerException.class,
@@ -51,7 +40,7 @@ class NonPrimeCheckTest {
     }
 
     @Test
-    public void speedTest() throws IOException {
+    public void largeTest() {
         String path = "/numbers.txt";
         InputStream in = SequentialNonPrimeCheck.class.getResourceAsStream(path);
         Scanner scanner = new Scanner(new InputStreamReader(in, StandardCharsets.UTF_8));
@@ -64,40 +53,11 @@ class NonPrimeCheckTest {
             test[i] = numbers.get((int) (Math.random() * 100000));
         }
 
-        long start;
-        long end;
-        Dataset dataset = new Dataset(new String[] {
-                "Sequential", "ParallelStream", "Threads(2)",
-                "Threads(3)", "Threads(4)", "Threads(5)", "Threads(6)"});
-        for (int i = 10; i < 1000000; i *= 10) {
-            int[] testSequential = Arrays.copyOfRange(test, 0, i);
-            start = System.currentTimeMillis();
-            Assertions.assertFalse(new SequentialNonPrimeCheck(testSequential).checkArray());
-            end = System.currentTimeMillis();
-            dataset.add(0, i, end - start);
+        Assertions.assertFalse(new SequentialNonPrimeCheck(test).checkArray());
+        Assertions.assertFalse(new ParallelStreamNonPrimeCheck(test).checkArray());
 
-            start = System.currentTimeMillis();
-            Assertions.assertFalse(new ParallelStreamNonPrimeCheck(testSequential).checkArray());
-            end = System.currentTimeMillis();
-            dataset.add(1, i, end - start);
-
-            for (int j = 2; j < 7; j++) {
-                start = System.currentTimeMillis();
-                Assertions.assertFalse(new ParallelNonPrimeCheck(testSequential, j).checkArray());
-                end = System.currentTimeMillis();
-                dataset.add(j, i, end - start);
-            }
+        for (int j = 2; j < 7; j++) {
+            Assertions.assertFalse(new ParallelNonPrimeCheck(test, j).checkArray());
         }
-
-        XYSplineRenderer renderer = new XYSplineRenderer();
-        renderer.setPrecision(6);
-        for (int i = 0; i < 7; i++) {
-            renderer.setSeriesShapesVisible(i, false);
-        }
-
-        final Diagram demo = new Diagram(dataset.createDataset(), renderer);
-        demo.pack();
-        OutputStream out = new FileOutputStream("./src/main/resources/Diagram.png");
-        ChartUtils.writeChartAsPNG(out, demo.getChart(), demo.getWidth(), demo.getHeight());
     }
 }
