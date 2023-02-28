@@ -7,17 +7,19 @@ public class ParallelNonPrimeCheck implements NonPrimeNumbersCheck {
     private final int[] numbers;
     private int streams;
     private boolean check;
+    private final Object lock;
 
     ParallelNonPrimeCheck(int[] numbers, int streams)
             throws NullPointerException, IllegalStateException {
         if (numbers == null) {
             throw new NullPointerException();
         }
-        if (streams < 1 || streams > 6) {
+        if (streams < 1 || streams > 12) {
             throw new IllegalStateException();
         }
         this.numbers = numbers;
         this.streams = streams;
+        lock = new Object();
     }
 
     public void setStreams(int streams) {
@@ -70,7 +72,7 @@ public class ParallelNonPrimeCheck implements NonPrimeNumbersCheck {
                     return;
                 }
                 if (!PrimeNumberCheck.checkNumber(numbers[i])) {
-                    synchronized (this) {
+                    synchronized (lock) {
                         check = true;
                         return;
                     }

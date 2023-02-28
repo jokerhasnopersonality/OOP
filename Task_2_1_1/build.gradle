@@ -1,10 +1,12 @@
 plugins {
     id 'java'
     id 'jacoco'
+    id "me.champeau.jmh" version "0.7.0"
 }
 
 group 'io.github.jokerhasnopersonality'
 version '1.0-SNAPSHOT'
+sourceCompatibility = '11'
 
 repositories {
     mavenCentral()
@@ -13,7 +15,6 @@ repositories {
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.0'
-    implementation 'org.jfree:jfreechart:1.5.4'
 }
 
 test {
