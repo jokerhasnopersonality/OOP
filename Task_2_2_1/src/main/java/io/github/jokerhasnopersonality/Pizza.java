@@ -1,9 +1,16 @@
 package io.github.jokerhasnopersonality;
 
+/**
+ * Pizza class.
+ */
 public class Pizza {
     private final int pizzaNumber;
     private final Order order;
 
+    /**
+     * Pizza constructor.
+     * Initializes a pizza with specified registry number and order.
+     */
     public Pizza(int pizzaNumber, Order order)
             throws IllegalArgumentException, NullPointerException {
         if (order == null) {
