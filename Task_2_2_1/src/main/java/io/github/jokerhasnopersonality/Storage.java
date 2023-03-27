@@ -73,7 +73,7 @@ public class Storage {
                         x -> x.getPizzaCount() == x.getPizzas().size())
                         .collect(Collectors.toList());
         synchronized (lock) {
-            while (storage.stream().noneMatch(
+            while (!storage.isEmpty() && storage.stream().noneMatch(
                     x -> x.getPizzaCount() == x.getPizzas().size())) {
                 lock.wait();
             }
