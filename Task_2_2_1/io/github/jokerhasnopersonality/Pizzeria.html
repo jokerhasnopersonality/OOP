@@ -254,9 +254,14 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>start</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;start()</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;start()
+           throws java.lang.IllegalStateException</pre>
 <div class="block">Method for starting pizzaiolos and deliverymen as threads.
  Order queue should not be empty.</div>
+<dl>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code>java.lang.IllegalStateException</code></dd>
+</dl>
 </li>
 </ul>
 <a id="addPizzaiolo(int,int)">
