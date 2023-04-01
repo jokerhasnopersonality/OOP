@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -178,30 +178,48 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="Order.html" title="class in io.github.jokerhasnopersonality">Order</a>&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getFromStorage(int)">getFromStorage</a></span>&#8203;(int&nbsp;trunkCapacity)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOrders(int)">getOrders</a></span>&#8203;(int&nbsp;maxCount)</code></th>
+<td class="colLast">
+<div class="block">Method for pizzaiolos to take pizza orders for baking.</div>
+</td>
+</tr>
+<tr id="i1" class="rowColor">
+<td class="colFirst"><code>java.util.List&lt;<a href="Pizza.html" title="class in io.github.jokerhasnopersonality">Pizza</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPizzas(int)">getPizzas</a></span>&#8203;(int&nbsp;trunkCapacity)</code></th>
 <td class="colLast">
 <div class="block">Retrieves list of orders that a deliveryman can take
  according to specified trunk capacity.</div>
 </td>
 </tr>
-<tr id="i1" class="rowColor">
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isEmpty()">isEmpty</a></span>()</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#noOrders()">noOrders</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i3" class="rowColor">
+<td class="colFirst"><code>boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#noPizzas()">noPizzas</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#passToStorage(java.util.List)">passToStorage</a></span>&#8203;(java.util.List&lt;<a href="Pizza.html" title="class in io.github.jokerhasnopersonality">Pizza</a>&gt;&nbsp;pizzas)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#passPizzas(java.util.List)">passPizzas</a></span>&#8203;(java.util.List&lt;<a href="Pizza.html" title="class in io.github.jokerhasnopersonality">Pizza</a>&gt;&nbsp;pizzas)</code></th>
 <td class="colLast">
 <div class="block">Adds baked pizzas to storage orders.</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#placeOrder(io.github.jokerhasnopersonality.Order)">placeOrder</a></span>&#8203;(<a href="Order.html" title="class in io.github.jokerhasnopersonality">Order</a>&nbsp;order)</code></th>
 <td class="colLast">
-<div class="block">Places an order for pizzas at the storage.</div>
+<div class="block">Adds an order to the order queue and displays a message [ QUEUE ]
+ for every pizza order.</div>
 </td>
+</tr>
+<tr id="i6" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setMaxWaitingTime(int)">setMaxWaitingTime</a></span>&#8203;(int&nbsp;maxWaitingTime)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -258,25 +276,36 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>placeOrder</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;placeOrder&#8203;(<a href="Order.html" title="class in io.github.jokerhasnopersonality">Order</a>&nbsp;order)
-                throws java.lang.NullPointerException,
-                       java.lang.IllegalArgumentException</pre>
-<div class="block">Places an order for pizzas at the storage.</div>
-<dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.lang.NullPointerException</code></dd>
-<dd><code>java.lang.IllegalArgumentException</code></dd>
-</dl>
+<pre class="methodSignature">public&nbsp;void&nbsp;placeOrder&#8203;(<a href="Order.html" title="class in io.github.jokerhasnopersonality">Order</a>&nbsp;order)</pre>
+<div class="block">Adds an order to the order queue and displays a message [ QUEUE ]
+ for every pizza order.</div>
 </li>
 </ul>
-<a id="passToStorage(java.util.List)">
+<a id="getOrders(int)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>passToStorage</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;passToStorage&#8203;(java.util.List&lt;<a href="Pizza.html" title="class in io.github.jokerhasnopersonality">Pizza</a>&gt;&nbsp;pizzas)
-                   throws java.lang.InterruptedException</pre>
+<h4>getOrders</h4>
+<pre class="methodSignature">public&nbsp;java.util.List&lt;<a href="Order.html" title="class in io.github.jokerhasnopersonality">Order</a>&gt;&nbsp;getOrders&#8203;(int&nbsp;maxCount)</pre>
+<div class="block">Method for pizzaiolos to take pizza orders for baking.
+ Displays a message [ BAKING ] about every pizza order taken by pizzaiolo.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>maxCount</code> - maximum number of pizzas that a pizzaiolo can bake at once.</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>List of individual pizza orders from different pizzeria orders.</dd>
+</dl>
+</li>
+</ul>
+<a id="passPizzas(java.util.List)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>passPizzas</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;passPizzas&#8203;(java.util.List&lt;<a href="Pizza.html" title="class in io.github.jokerhasnopersonality">Pizza</a>&gt;&nbsp;pizzas)
+                throws java.lang.InterruptedException</pre>
 <div class="block">Adds baked pizzas to storage orders.
  Displays a message [ STORAGE ] about every pizza passed to storage.</div>
 <dl>
@@ -285,14 +314,14 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a id="getFromStorage(int)">
+<a id="getPizzas(int)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>getFromStorage</h4>
-<pre class="methodSignature">public&nbsp;java.util.List&lt;<a href="Order.html" title="class in io.github.jokerhasnopersonality">Order</a>&gt;&nbsp;getFromStorage&#8203;(int&nbsp;trunkCapacity)
-                                     throws java.lang.InterruptedException</pre>
+<h4>getPizzas</h4>
+<pre class="methodSignature">public&nbsp;java.util.List&lt;<a href="Pizza.html" title="class in io.github.jokerhasnopersonality">Pizza</a>&gt;&nbsp;getPizzas&#8203;(int&nbsp;trunkCapacity)
+                                throws java.lang.InterruptedException</pre>
 <div class="block">Retrieves list of orders that a deliveryman can take
  according to specified trunk capacity. Displays a message
  [ DELIVERY ] about every complex order taken by deliveryman.</div>
@@ -302,13 +331,31 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a id="isEmpty()">
+<a id="noOrders()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>noOrders</h4>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;noOrders()</pre>
+</li>
+</ul>
+<a id="noPizzas()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>noPizzas</h4>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;noPizzas()</pre>
+</li>
+</ul>
+<a id="setMaxWaitingTime(int)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>isEmpty</h4>
-<pre class="methodSignature">public&nbsp;boolean&nbsp;isEmpty()</pre>
+<h4>setMaxWaitingTime</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setMaxWaitingTime&#8203;(int&nbsp;maxWaitingTime)</pre>
 </li>
 </ul>
 </li>

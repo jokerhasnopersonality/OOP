@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10};
+var data = {"i0":10,"i1":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -153,8 +153,7 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(int,int)">Order</a></span>&#8203;(int&nbsp;pizzaCount,
-     int&nbsp;deliveryTime)</code></th>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(int)">Order</a></span>&#8203;(int&nbsp;deliveryTime)</code></th>
 <td class="colLast">
 <div class="block">Order constructor.</div>
 </td>
@@ -178,35 +177,13 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addPizza(io.github.jokerhasnopersonality.Pizza)">addPizza</a></span>&#8203;(<a href="Pizza.html" title="class in io.github.jokerhasnopersonality">Pizza</a>&nbsp;pizza)</code></th>
-<td class="colLast">
-<div class="block">Adds a pizza to order's pizza list if it has a relevant registry number.</div>
-</td>
-</tr>
-<tr id="i1" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDeliveryTime()">getDeliveryTime</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i1" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOrderNumber()">getOrderNumber</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i3" class="rowColor">
-<td class="colFirst"><code>int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPizzaCount()">getPizzaCount</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i4" class="altColor">
-<td class="colFirst"><code>int[]</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPizzaNumbers()">getPizzaNumbers</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i5" class="rowColor">
-<td class="colFirst"><code>java.util.List&lt;<a href="Pizza.html" title="class in io.github.jokerhasnopersonality">Pizza</a>&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPizzas()">getPizzas</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -233,14 +210,13 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a id="&lt;init&gt;(int,int)">
+<a id="&lt;init&gt;(int)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>Order</h4>
-<pre>public&nbsp;Order&#8203;(int&nbsp;pizzaCount,
-             int&nbsp;deliveryTime)
+<pre>public&nbsp;Order&#8203;(int&nbsp;deliveryTime)
       throws java.lang.IllegalArgumentException</pre>
 <div class="block">Order constructor.
  Initializes an order with given number of pizzas and delivery time.</div>
@@ -269,55 +245,13 @@ extends java.lang.Object</pre>
 <pre class="methodSignature">public&nbsp;int&nbsp;getOrderNumber()</pre>
 </li>
 </ul>
-<a id="getPizzaCount()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getPizzaCount</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;getPizzaCount()</pre>
-</li>
-</ul>
 <a id="getDeliveryTime()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getDeliveryTime</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;getDeliveryTime()</pre>
-</li>
-</ul>
-<a id="getPizzaNumbers()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getPizzaNumbers</h4>
-<pre class="methodSignature">public&nbsp;int[]&nbsp;getPizzaNumbers()</pre>
-</li>
-</ul>
-<a id="getPizzas()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getPizzas</h4>
-<pre class="methodSignature">public&nbsp;java.util.List&lt;<a href="Pizza.html" title="class in io.github.jokerhasnopersonality">Pizza</a>&gt;&nbsp;getPizzas()</pre>
-</li>
-</ul>
-<a id="addPizza(io.github.jokerhasnopersonality.Pizza)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>addPizza</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;addPizza&#8203;(<a href="Pizza.html" title="class in io.github.jokerhasnopersonality">Pizza</a>&nbsp;pizza)
-              throws java.lang.NullPointerException</pre>
-<div class="block">Adds a pizza to order's pizza list if it has a relevant registry number.</div>
-<dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.lang.NullPointerException</code></dd>
-</dl>
+<h4>getDeliveryTime</h4>
+<pre class="methodSignature">public&nbsp;int&nbsp;getDeliveryTime()</pre>
 </li>
 </ul>
 </li>
