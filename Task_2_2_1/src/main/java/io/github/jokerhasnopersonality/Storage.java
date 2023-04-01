@@ -4,16 +4,19 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
-import java.util.stream.Collectors;
 
 /**
  * Storage class representing storage for pizza orders.
  */
 public class Storage {
-    private final Queue<Order> storage;
+    private static Queue<Order> queue;
+    private final Queue<Pizza> storage;
+    private int maxWaitingTime = 50;
     private int pizzaCount;
     private final int capacity;
-    private final Object lock;
+    private final Object lockQueue;
+    private final Object lockStorage;
+    private int countWork;
 
     /**
      * Storage constructor. Initializes a storage with specified capacity.
@@ -23,41 +26,68 @@ public class Storage {
             throw new IllegalArgumentException(
                     "Storage capacity must be a positive integer >=10.");
         }
+        queue = new ArrayDeque<>();
         storage = new ArrayDeque<>(capacity);
         pizzaCount = 0;
         this.capacity = capacity;
-        lock = new Object();
+        lockQueue = new Object();
+        lockStorage = new Object();
+        countWork = 0;
     }
 
     /**
-     * Places an order for pizzas at the storage.
+     * Adds an order to the order queue and displays a message [ QUEUE ]
+     * for every pizza order.
      */
-    public void placeOrder(Order order)
-            throws NullPointerException, IllegalArgumentException {
-        if (order == null) {
-            throw new NullPointerException();
+    public void placeOrder(Order order) {
+        synchronized (lockQueue) {
+            queue.add(order);
         }
-        storage.offer(order);
+        System.out.println("ORDER [" + order.getOrderNumber() + "]: [ QUEUE ]");
+    }
+
+    /**
+     * Method for pizzaiolos to take pizza orders for baking.
+     * Displays a message [ BAKING ] about every pizza order taken by pizzaiolo.
+
+     * @param maxCount maximum number of pizzas that a pizzaiolo can bake at once.
+     * @return List of individual pizza orders from different pizzeria orders.
+     */
+    public List<Order> getOrders(int maxCount) {
+        List<Order> orders = new ArrayList<>();
+        int count = 0;
+        Order take;
+        synchronized (lockQueue) {
+            while (count < maxCount && !queue.isEmpty()) {
+                take = queue.poll();
+                orders.add(take);
+                System.out.println("ORDER [" + take.getOrderNumber()
+                        + "]: [ BAKING ]");
+                count++;
+            }
+        }
+        countWork++;
+        return orders;
     }
 
     /**
      * Adds baked pizzas to storage orders.
      * Displays a message [ STORAGE ] about every pizza passed to storage.
      */
-    public void passToStorage(List<Pizza> pizzas) throws InterruptedException {
+    public void passPizzas(List<Pizza> pizzas) throws InterruptedException {
         for (Pizza p : pizzas) {
-            synchronized (lock) {
+            synchronized (lockStorage) {
                 while (pizzaCount == capacity) {
-                    lock.wait();
+                    lockStorage.wait();
                 }
-                p.getOrder().addPizza(p);
+                storage.add(p);
                 System.out.println("ORDER ["
-                        + p.getOrder().getOrderNumber() + "] - PIZZA ["
-                        + p.getPizzaNumber() + "]: [ STORAGE ]");
+                        + p.getOrder().getOrderNumber() + "]: [ STORAGE ]");
                 pizzaCount++;
-                lock.notifyAll();
+                lockStorage.notifyAll();
             }
         }
+        countWork--;
     }
 
     /**
@@ -65,33 +95,36 @@ public class Storage {
      * according to specified trunk capacity. Displays a message
      * [ DELIVERY ] about every complex order taken by deliveryman.
      */
-    public List<Order> getFromStorage(int trunkCapacity) throws InterruptedException {
-        List<Order> orders = new ArrayList<>();
+    public List<Pizza> getPizzas(int trunkCapacity) throws InterruptedException {
+        List<Pizza> pizzas = new ArrayList<>();
         int count = 0;
-        Order take;
-        List<Order> ready = storage.stream().filter(
-                        x -> x.getPizzaCount() == x.getPizzas().size())
-                        .collect(Collectors.toList());
-        synchronized (lock) {
-            while (!storage.isEmpty() && storage.stream().noneMatch(
-                    x -> x.getPizzaCount() == x.getPizzas().size())) {
-                lock.wait();
+        Pizza take;
+        synchronized (lockStorage) {
+            while (storage.isEmpty() && countWork > 0) {
+                lockStorage.wait(maxWaitingTime);
             }
-            for (Order o : ready) {
-                if (count < trunkCapacity) {
-                    count += o.getPizzaCount();
-                    orders.add(ready.get(0));
-                    storage.remove(ready.get(0));
-                    System.out.println("ORDER [" + o.getOrderNumber() + "] : [ DELIVERY ]");
-                    pizzaCount += o.getPizzaCount();
-                    lock.notifyAll();
-                }
+            while (!storage.isEmpty() && count < trunkCapacity) {
+                count++;
+                take = storage.poll();
+                pizzas.add(take);
+                System.out.println("ORDER ["
+                        + take.getOrder().getOrderNumber() + "]: [ DELIVERY ]");
+                pizzaCount--;
+                lockStorage.notifyAll();
             }
         }
-        return orders;
+        return pizzas;
     }
 
-    public boolean isEmpty() {
+    public boolean noOrders() {
+        return queue.isEmpty();
+    }
+
+    public boolean noPizzas() {
         return storage.isEmpty();
+    }
+
+    public void setMaxWaitingTime(int maxWaitingTime) {
+        this.maxWaitingTime = maxWaitingTime;
     }
 }

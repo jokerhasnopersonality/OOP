@@ -33,25 +33,26 @@ public class Pizzaiolo implements Runnable {
 
     @Override
     public void run() {
-        List<OrderPair> pizzaOrders = pizzeria.getFromQueue(maxCountAtOnce);
-        while (!pizzaOrders.isEmpty()) {
+        List<Order> orders;
+        List<Pizza> pizzas;
+        while (!pizzeria.getStorage().noOrders()) {
+            orders = pizzeria.getStorage().getOrders(maxCountAtOnce);
             try {
                 Thread.sleep(cookingTime * 100L);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            List<Pizza> pizzas = new ArrayList<>(pizzaOrders.size());
-            for (OrderPair p : pizzaOrders) {
-                pizzas.add(new Pizza(p.getPizzaNumber(), p.getOrder()));
-                System.out.println("ORDER [" + p.getOrder().getOrderNumber()
-                        + "] - PIZZA [" + p.getPizzaNumber() + "]: [ READY ]");
+            pizzas = new ArrayList<>(orders.size());
+            for (Order p : orders) {
+                pizzas.add(new Pizza(p));
+                System.out.println("ORDER [" + p.getOrderNumber()
+                        + "]: [ READY ]");
             }
             try {
-                pizzeria.getStorage().passToStorage(pizzas);
+                pizzeria.getStorage().passPizzas(pizzas);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            pizzaOrders = pizzeria.getFromQueue(maxCountAtOnce);
         }
     }
 }
