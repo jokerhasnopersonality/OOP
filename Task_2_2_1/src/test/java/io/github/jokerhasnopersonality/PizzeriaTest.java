@@ -25,17 +25,17 @@ class PizzeriaTest {
         for (int i = 0; i < properties.deliverymen; i++) {
             pizzeria.addDeliveryman(properties.trunkCapacity[i]);
         }
-        pizzeria.addToQueue(new Order(2, 20));
-        pizzeria.addToQueue(new Order(4, 25));
-        pizzeria.addToQueue(new Order(6, 23));
-        pizzeria.addToQueue(new Order(3, 26));
-        pizzeria.addToQueue(new Order(2, 30));
-        pizzeria.addToQueue(new Order(5, 40));
-        pizzeria.addToQueue(new Order(5, 43));
-        pizzeria.addToQueue(new Order(6, 15));
-        pizzeria.addToQueue(new Order(4, 45));
-        pizzeria.addToQueue(new Order(5, 34));
-        pizzeria.addToQueue(new Order(3, 32));
+        pizzeria.getStorage().placeOrder(new Order(20));
+        pizzeria.getStorage().placeOrder(new Order(25));
+        pizzeria.getStorage().placeOrder(new Order(23));
+        pizzeria.getStorage().placeOrder(new Order(26));
+        pizzeria.getStorage().placeOrder(new Order(30));
+        pizzeria.getStorage().placeOrder(new Order(40));
+        pizzeria.getStorage().placeOrder(new Order(43));
+        pizzeria.getStorage().placeOrder(new Order(15));
+        pizzeria.getStorage().placeOrder(new Order(45));
+        pizzeria.getStorage().placeOrder(new Order(34));
+        pizzeria.getStorage().placeOrder(new Order(32));
         pizzeria.start();
     }
 }

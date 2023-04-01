@@ -34,20 +34,20 @@ public class Deliveryman implements Runnable {
 
     @Override
     public void run() {
-        List<Order> orders;
-        while (!pizzeria.getStorage().isEmpty()) {
+        List<Pizza> pizzas;
+        while (!pizzeria.getStorage().noOrders() || !pizzeria.getStorage().noPizzas()) {
             try {
-                orders = pizzeria.getStorage().getFromStorage(trunkCapacity);
+                pizzas = pizzeria.getStorage().getPizzas(trunkCapacity);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            for (Order o : orders) {
+            for (Pizza p : pizzas) {
                 try {
-                    Thread.sleep(o.getDeliveryTime() * 100L);
+                    Thread.sleep(p.getOrder().getDeliveryTime() * 100L);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
-                System.out.println("ORDER [" + o.getOrderNumber() + "] : [ DELIVERED ]");
+                System.out.println("ORDER [" + p.getOrder().getOrderNumber() + "]: [ DELIVERED ]");
             }
         }
     }
