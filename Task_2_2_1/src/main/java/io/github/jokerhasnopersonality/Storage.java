@@ -104,7 +104,7 @@ public class Storage {
         Pizza take;
         synchronized (lockStorage) {
             while (storage.isEmpty() && countWork > 0) {
-                lockStorage.wait();
+                lockStorage.wait(5000);
             }
             while (!storage.isEmpty() && count < trunkCapacity) {
                 count++;
