@@ -11,8 +11,6 @@ import java.util.Queue;
 public class Storage {
     private static Queue<Order> queue;
     private final Queue<Pizza> storage;
-    private int maxWaitingTime = 50;
-    private int pizzaCount;
     private final int capacity;
     private final Object lockQueue;
     private final Object lockStorage;
@@ -28,7 +26,6 @@ public class Storage {
         }
         queue = new ArrayDeque<>();
         storage = new ArrayDeque<>(capacity);
-        pizzaCount = 0;
         this.capacity = capacity;
         lockQueue = new Object();
         lockStorage = new Object();
@@ -39,7 +36,10 @@ public class Storage {
      * Adds an order to the order queue and displays a message [ QUEUE ]
      * for every pizza order.
      */
-    public void placeOrder(Order order) {
+    public void placeOrder(Order order) throws NullPointerException {
+        if (order == null) {
+            throw new NullPointerException();
+        }
         synchronized (lockQueue) {
             queue.add(order);
         }
@@ -74,16 +74,19 @@ public class Storage {
      * Adds baked pizzas to storage orders.
      * Displays a message [ STORAGE ] about every pizza passed to storage.
      */
-    public void passPizzas(List<Pizza> pizzas) throws InterruptedException {
+    public void passPizzas(List<Pizza> pizzas)
+            throws NullPointerException, InterruptedException {
+        if (pizzas == null) {
+            throw new NullPointerException();
+        }
         for (Pizza p : pizzas) {
             synchronized (lockStorage) {
-                while (pizzaCount == capacity) {
+                while (storage.size() == capacity) {
                     lockStorage.wait();
                 }
                 storage.add(p);
                 System.out.println("ORDER ["
                         + p.getOrder().getOrderNumber() + "]: [ STORAGE ]");
-                pizzaCount++;
                 lockStorage.notifyAll();
             }
         }
@@ -101,7 +104,7 @@ public class Storage {
         Pizza take;
         synchronized (lockStorage) {
             while (storage.isEmpty() && countWork > 0) {
-                lockStorage.wait(maxWaitingTime);
+                lockStorage.wait();
             }
             while (!storage.isEmpty() && count < trunkCapacity) {
                 count++;
@@ -109,7 +112,6 @@ public class Storage {
                 pizzas.add(take);
                 System.out.println("ORDER ["
                         + take.getOrder().getOrderNumber() + "]: [ DELIVERY ]");
-                pizzaCount--;
                 lockStorage.notifyAll();
             }
         }
@@ -122,9 +124,5 @@ public class Storage {
 
     public boolean noPizzas() {
         return storage.isEmpty();
-    }
-
-    public void setMaxWaitingTime(int maxWaitingTime) {
-        this.maxWaitingTime = maxWaitingTime;
     }
 }

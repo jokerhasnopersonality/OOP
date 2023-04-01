@@ -1,9 +1,5 @@
 package io.github.jokerhasnopersonality;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 /**
  * Class representing a complex order. May contain one or more regular pizzas orders.
  */

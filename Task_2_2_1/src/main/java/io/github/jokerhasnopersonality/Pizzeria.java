@@ -26,7 +26,11 @@ public class Pizzeria {
      * Method for starting pizzaiolos and deliverymen as threads.
      * Order queue should not be empty.
      */
-    public void start() {
+    public void start() throws IllegalStateException {
+        if (pizzaiolos.size() == 0 || deliverymen.size() == 0) {
+            throw new IllegalStateException(
+                    "Cannot start without pizzaiolos and deliverymen.");
+        }
         Thread[] bakingThreads = new Thread[pizzaiolos.size()];
         Thread[] deliveryThreads = new Thread[deliverymen.size()];
         for (int i = 0; i < bakingThreads.length; i++) {
@@ -58,11 +62,11 @@ public class Pizzeria {
     }
 
     public void addPizzaiolo(int cookingTime, int maxCountAtOnce) {
-        pizzaiolos.add(new Pizzaiolo(cookingTime, maxCountAtOnce, this));
+        pizzaiolos.add(new Pizzaiolo(cookingTime, maxCountAtOnce, storage));
     }
 
     public void addDeliveryman(int trunkCapacity) {
-        deliverymen.add(new Deliveryman(trunkCapacity, this));
+        deliverymen.add(new Deliveryman(trunkCapacity, storage));
     }
 
     public static int newOrderNumber() {

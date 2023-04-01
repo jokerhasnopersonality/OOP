@@ -7,25 +7,25 @@ import java.util.List;
  */
 public class Deliveryman implements Runnable {
     private final int trunkCapacity;
-    private final Pizzeria pizzeria;
+    private final Storage storage;
 
     /**
      * Deliveryman constructor.
      * Initializes a deliveryman with specified characteristics.
 
      * @param trunkCapacity maximum number of pizzas that can fit inside a delivery car.
-     * @param pizzeria pizzeria from where a deliveryman should take orders to deliver.
+     * @param storage pizzeria from where a deliveryman should take orders to deliver.
      */
-    public Deliveryman(int trunkCapacity, Pizzeria pizzeria)
+    public Deliveryman(int trunkCapacity, Storage storage)
             throws IllegalArgumentException, NullPointerException {
-        if (pizzeria == null) {
+        if (storage == null) {
             throw new NumberFormatException();
         }
         if (trunkCapacity <= 0) {
             throw new IllegalArgumentException();
         }
         this.trunkCapacity = trunkCapacity;
-        this.pizzeria = pizzeria;
+        this.storage = storage;
     }
 
     public int getTrunkCapacity() {
@@ -35,9 +35,9 @@ public class Deliveryman implements Runnable {
     @Override
     public void run() {
         List<Pizza> pizzas;
-        while (!pizzeria.getStorage().noOrders() || !pizzeria.getStorage().noPizzas()) {
+        while (!storage.noOrders() || !storage.noPizzas()) {
             try {
-                pizzas = pizzeria.getStorage().getPizzas(trunkCapacity);
+                pizzas = storage.getPizzas(trunkCapacity);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
