@@ -6,17 +6,16 @@ package io.github.jokerhasnopersonality;
 public class Order {
     private final int orderNumber;
     private final int deliveryTime;
-
     /**
      * Order constructor.
      * Initializes an order with given number of pizzas and delivery time.
      */
-    public Order(int deliveryTime) throws IllegalArgumentException {
-        if (deliveryTime <= 0) {
+    public Order(int deliveryTime, int orderNumber) throws IllegalArgumentException {
+        if (deliveryTime <= 0 || orderNumber < 0) {
             throw new IllegalArgumentException();
         }
         this.deliveryTime = deliveryTime;
-        orderNumber = Pizzeria.newOrderNumber();
+        this.orderNumber = orderNumber;
     }
 
     public int getOrderNumber() {
