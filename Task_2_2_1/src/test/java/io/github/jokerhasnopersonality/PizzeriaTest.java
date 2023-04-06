@@ -47,17 +47,9 @@ class PizzeriaTest {
 
         PrintStream out = new PrintStream(new FileOutputStream("output.txt"));
         System.setOut(out);
-        pizzeria.getStorage().placeOrder(new Order(20));
-        pizzeria.getStorage().placeOrder(new Order(25));
-        pizzeria.getStorage().placeOrder(new Order(23));
-        pizzeria.getStorage().placeOrder(new Order(26));
-        pizzeria.getStorage().placeOrder(new Order(30));
-        pizzeria.getStorage().placeOrder(new Order(40));
-        pizzeria.getStorage().placeOrder(new Order(43));
-        pizzeria.getStorage().placeOrder(new Order(15));
-        pizzeria.getStorage().placeOrder(new Order(45));
-        pizzeria.getStorage().placeOrder(new Order(34));
-        pizzeria.getStorage().placeOrder(new Order(32));
+        for (int i = 0; i < 11; i++) {
+            pizzeria.getStorage().placeOrder(new Order(i+20, i));
+        }
 
         pizzeria.start();
 
@@ -81,7 +73,7 @@ class PizzeriaTest {
         PrintStream out = new PrintStream(new FileOutputStream("output.txt"));
         System.setOut(out);
         for (int i = 0; i < 12; i++) {
-            storage.placeOrder(new Order(1));
+            storage.placeOrder(new Order(1, i));
         }
         Thread[] bakingThreads = new Thread[pizzaiolos.length];
         for (int i = 0; i < bakingThreads.length; i++) {

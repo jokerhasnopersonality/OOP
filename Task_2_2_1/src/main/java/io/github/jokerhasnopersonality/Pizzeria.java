@@ -10,7 +10,6 @@ public class Pizzeria {
     private final Storage storage;
     private final List<Pizzaiolo> pizzaiolos;
     private final List<Deliveryman> deliverymen;
-    private static int orderCount;
 
     /**
      * Pizzeria constructor. Creates a storage with the specified capacity.
@@ -19,7 +18,6 @@ public class Pizzeria {
         storage = new Storage(storageCapacity);
         pizzaiolos = new ArrayList<>();
         deliverymen = new ArrayList<>();
-        orderCount = -1;
     }
 
     /**
@@ -67,10 +65,6 @@ public class Pizzeria {
 
     public void addDeliveryman(int trunkCapacity) {
         deliverymen.add(new Deliveryman(trunkCapacity, storage));
-    }
-
-    public static int newOrderNumber() {
-        return ++orderCount;
     }
 
     public Storage getStorage() {
