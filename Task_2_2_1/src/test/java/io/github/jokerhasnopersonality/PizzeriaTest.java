@@ -48,7 +48,7 @@ class PizzeriaTest {
         PrintStream out = new PrintStream(new FileOutputStream("output.txt"));
         System.setOut(out);
         for (int i = 0; i < 11; i++) {
-            pizzeria.getStorage().placeOrder(new Order(i+20, i));
+            pizzeria.getStorage().placeOrder(new Order(i + 20, i));
         }
 
         pizzeria.start();

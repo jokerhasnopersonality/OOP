@@ -6,6 +6,7 @@ package io.github.jokerhasnopersonality;
 public class Order {
     private final int orderNumber;
     private final int deliveryTime;
+
     /**
      * Order constructor.
      * Initializes an order with given number of pizzas and delivery time.
