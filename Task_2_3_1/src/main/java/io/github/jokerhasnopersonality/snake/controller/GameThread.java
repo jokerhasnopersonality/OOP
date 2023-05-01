@@ -9,6 +9,9 @@ public class GameThread implements Runnable {
     private final float stepTime;
     private final GameController controller;
 
+    /**
+     * Game Thread constructor.
+     */
     public GameThread(GameController controller) throws NullPointerException {
         if (controller == null) {
             throw new NullPointerException();

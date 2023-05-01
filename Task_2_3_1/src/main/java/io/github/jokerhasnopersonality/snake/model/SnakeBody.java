@@ -8,6 +8,10 @@ public class SnakeBody {
     private final Point point;
     private Direction direction;
 
+    /**
+     * Snake body constructor. Creates a snake body block
+     * at the specified position with the specified direction.
+     */
     public SnakeBody(int x, int y, Direction direction) throws NullPointerException {
         if (direction == null) {
             throw new NullPointerException("Direction must be specified.");
@@ -24,6 +28,9 @@ public class SnakeBody {
         return direction;
     }
 
+    /**
+     * Method to change direction of a single snake body block.
+     */
     public void setDirection(Direction direction) throws NullPointerException {
         if (direction == null) {
             throw new NullPointerException("Direction must be specified.");
