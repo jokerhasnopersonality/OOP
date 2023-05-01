@@ -1,13 +1,12 @@
 package io.github.jokerhasnopersonality.snake.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
 import io.github.jokerhasnopersonality.snake.View;
 import io.github.jokerhasnopersonality.snake.model.Direction;
 import io.github.jokerhasnopersonality.snake.model.Snake;
 import io.github.jokerhasnopersonality.snake.model.SnakeBody;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -45,10 +44,13 @@ public class FieldController {
      * @param view View instance to draw elements on the field
      */
     public FieldController(int fieldWidth, int fieldHeight, int blockSize,
-                           int maxFoodCount, int goal, View view) throws IllegalArgumentException {
+                           int maxFoodCount, int goal, View view)
+            throws IllegalArgumentException, NullPointerException {
         if (fieldWidth <= 0 || fieldHeight <= 0 || blockSize <= 0
-                || maxFoodCount <= 0 || goal <= 0 || view == null) {
+                || maxFoodCount <= 0 || goal <= 0) {
             throw new IllegalArgumentException();
+        } else if (view == null) {
+            throw new NullPointerException();
         }
         field = new AnchorPane();
         this.width = fieldWidth;
@@ -106,7 +108,7 @@ public class FieldController {
      * Method for checking if it is safe to add a food point or a barrier
      * at the specified position of the field.
      */
-    public boolean checkPointCollision(int pointX, int pointY) {
+    private boolean checkPointCollision(int pointX, int pointY) {
         SnakeBody safePosition1 = player.getNextBlock(player.getHead());
         SnakeBody safePosition2 = player.getNextBlock(safePosition1);
         return (safePosition1.getPoint().getX() == pointX
@@ -120,7 +122,7 @@ public class FieldController {
     /**
      * Method for checking if snake has eaten itself.
      */
-    public boolean checkSnakeCollision() {
+    private boolean checkSnakeCollision() {
         SnakeBody head = player.getHead();
         return player.getSnake().subList(1, player.getSnakeLength()).stream().anyMatch(n ->
                 n.getPoint().getX() == head.getPoint().getX()
@@ -130,7 +132,7 @@ public class FieldController {
     /**
      * Adds a single food point to the field.
      */
-    public Node generateFood() {
+    private Node generateFood() {
         int x;
         int y;
         do {
@@ -144,7 +146,7 @@ public class FieldController {
     /**
      * Adds a sequence of barrier blocks to the field.
      */
-    public List<Node> generateBarrier() {
+    private List<Node> generateBarrier() {
         int x;
         int y;
         Random random = new Random();
@@ -181,7 +183,10 @@ public class FieldController {
     /**
      * Method for drawing snake on the field using view.
      */
-    public List<Node> drawSnake(Snake snake) {
+    public List<Node> drawSnake(Snake snake) throws NullPointerException {
+        if (snake == null) {
+            throw new NullPointerException();
+        }
         List<Node> nodes = new ArrayList<>();
         SnakeBody block = snake.getHead();
         nodes.add(view.drawSnakeHead(block.getPoint().getX(),
@@ -209,7 +214,10 @@ public class FieldController {
 
      * @param nextDirection direction that a snake should hold before shifting to next state
      */
-    public void goToNextState(Direction nextDirection) {
+    public void goToNextState(Direction nextDirection) throws NullPointerException {
+        if (nextDirection == null) {
+            throw new NullPointerException();
+        }
         player.changeDirection(nextDirection);
         player.grow();
 

@@ -1,7 +1,5 @@
 package io.github.jokerhasnopersonality.snake;
 
-import java.util.Objects;
-
 import io.github.jokerhasnopersonality.snake.controller.GameController;
 import io.github.jokerhasnopersonality.snake.controller.GameThread;
 import io.github.jokerhasnopersonality.snake.controller.KeyHandler;

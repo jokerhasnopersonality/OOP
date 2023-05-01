@@ -1,7 +1,6 @@
 package io.github.jokerhasnopersonality.snake.controller;
 
 import io.github.jokerhasnopersonality.snake.View;
-import io.github.jokerhasnopersonality.snake.controller.FieldController;
 import io.github.jokerhasnopersonality.snake.model.Direction;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -35,7 +34,11 @@ public class GameController {
      * @param goal number of food points that a player needs to
      *             collect in order to win
      */
-    public GameController(int width, int height, int blockSize, int maxFoodCount, int goal) {
+    public GameController(int width, int height, int blockSize, int maxFoodCount, int goal)
+            throws IllegalArgumentException {
+        if (width < 0 || height < 0 || maxFoodCount <= 0 || goal <= 0) {
+            throw new IllegalArgumentException();
+        }
         pane = new AnchorPane();
         pane.setMaxWidth(width * blockSize);
         pane.setMaxHeight(height * blockSize);
@@ -81,12 +84,12 @@ public class GameController {
         }
     }
 
-    public void showGameOver() {
+    private void showGameOver() {
         stopped = true;
         gameOverContainer.setVisible(true);
     }
 
-    public void showGameWon() {
+    private void showGameWon() {
         stopped = true;
         gameWonContainer.setVisible(true);
     }
@@ -116,7 +119,10 @@ public class GameController {
     /**
      * Processes call to change snake direction.
      */
-    public void changeSnakeDirection(Direction direction) {
+    public void changeSnakeDirection(Direction direction) throws NullPointerException {
+        if (direction == null) {
+            throw new NullPointerException();
+        }
         if (!busy) {
             switch (direction) {
                 case LEFT: {

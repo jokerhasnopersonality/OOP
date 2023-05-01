@@ -1,6 +1,5 @@
 package io.github.jokerhasnopersonality.snake.controller;
 
-import io.github.jokerhasnopersonality.snake.controller.GameController;
 import javafx.application.Platform;
 
 /**
@@ -10,8 +9,11 @@ public class GameThread implements Runnable {
     private final float stepTime;
     private final GameController controller;
 
-    public GameThread(GameController controller) {
-        stepTime = 600.0f;
+    public GameThread(GameController controller) throws NullPointerException {
+        if (controller == null) {
+            throw new NullPointerException();
+        }
+        stepTime = 500.0f;
         this.controller = controller;
     }
 
