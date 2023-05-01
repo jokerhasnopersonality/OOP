@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"m":"io.github.jokerhasnopersonality","l":"io.github.jokerhasnopersonality.snake"},{"m":"io.github.jokerhasnopersonality","l":"io.github.jokerhasnopersonality.snake.controller"},{"m":"io.github.jokerhasnopersonality","l":"io.github.jokerhasnopersonality.snake.model"}]

@@ -1,0 +1,4 @@
+module:io.github.jokerhasnopersonality
+io.github.jokerhasnopersonality.snake
+io.github.jokerhasnopersonality.snake.controller
+io.github.jokerhasnopersonality.snake.model
