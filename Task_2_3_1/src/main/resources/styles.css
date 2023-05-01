@@ -1,0 +1,9 @@
+.button {
+    -fx-background-color: thistle;
+}
+.grid-pane {
+    -fx-background-color: white;
+}
+.flow-pane {
+    -fx-background-color: thistle;
+}

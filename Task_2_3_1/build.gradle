@@ -24,8 +24,8 @@ tasks.withType(JavaCompile) {
 }
 
 application {
-    mainModule = 'io.github.jokerhasnopersonality.snake_app'
-    mainClass = 'io.github.jokerhasnopersonality.snake_app.HelloApplication'
+    mainModule = 'io.github.jokerhasnopersonality.snake'
+    mainClass = 'io.github.jokerhasnopersonality.snake.SnakeGameApplication'
 }
 
 javafx {
