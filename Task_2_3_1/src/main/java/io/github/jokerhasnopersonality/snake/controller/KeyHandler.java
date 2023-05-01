@@ -1,7 +1,5 @@
 package io.github.jokerhasnopersonality.snake.controller;
 
-import io.github.jokerhasnopersonality.snake.controller.GameController;
-import io.github.jokerhasnopersonality.snake.controller.GameThread;
 import io.github.jokerhasnopersonality.snake.model.Direction;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
@@ -20,7 +18,10 @@ public class KeyHandler implements EventHandler<KeyEvent> {
      * @param gameThread Game Thread instance
      * @param thread current thread
      */
-    public KeyHandler(GameThread gameThread, Thread thread) {
+    public KeyHandler(GameThread gameThread, Thread thread) throws NullPointerException {
+        if (gameThread == null || thread == null) {
+            throw new NullPointerException();
+        }
         this.gameThread = gameThread;
         this.controller = gameThread.getController();
         this.thread = thread;

@@ -46,7 +46,10 @@ public class Snake {
     /**
      * Predicts the next state of a snake block.
      */
-    public SnakeBody getNextBlock(SnakeBody block) {
+    public SnakeBody getNextBlock(SnakeBody block) throws NullPointerException {
+        if (block == null) {
+            throw new NullPointerException();
+        }
         int x = block.getPoint().getX();
         int y = block.getPoint().getY();
         SnakeBody nextHead = getHead();
