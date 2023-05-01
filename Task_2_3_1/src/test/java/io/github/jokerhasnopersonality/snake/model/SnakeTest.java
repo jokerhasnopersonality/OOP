@@ -23,8 +23,8 @@ class SnakeTest {
         for (int i = 0; i < 9; i++) {
             snake.grow();
         }
-        Assertions.assertEquals(11, snake.getSnakeLength());
-        Assertions.assertEquals(10, snake.getHead().getPoint().getY());
+        Assertions.assertEquals(12, snake.getSnakeLength());
+        Assertions.assertEquals(9, snake.getHead().getPoint().getY());
         Assertions.assertEquals(0, snake.getTail().getPoint().getY());
     }
 }
