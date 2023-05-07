@@ -2,6 +2,9 @@ package io.github.jokerhasnopersonality.snake.controller;
 
 import io.github.jokerhasnopersonality.snake.View;
 import io.github.jokerhasnopersonality.snake.model.Direction;
+import io.github.jokerhasnopersonality.snake.model.Field;
+import io.github.jokerhasnopersonality.snake.model.SnakeGame;
+import javafx.application.Platform;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
@@ -9,18 +12,19 @@ import javafx.scene.text.Text;
 /**
  * Game controller class for managing the game process and signals from player.
  */
-public class GameController {
+public class GameController implements Runnable {
+    private final SnakeGame game;
+    private final FieldController fieldController;
     private final AnchorPane pane;
     private final Pane helpContainer;
     private final Pane pauseContainer;
     private final Pane gameOverContainer;
     private final Pane gameWonContainer;
-    private final FieldController fieldController;
     private final Text scoreText;
     private boolean stopped;
     private boolean busy;
-    private final int goal;
     private Direction nextDirection;
+    private final float stepTime;
 
     /**
      * Game controller constructor. Creates game components and
@@ -34,19 +38,21 @@ public class GameController {
      * @param goal number of food points that a player needs to
      *             collect in order to win
      */
-    public GameController(int width, int height, int blockSize, int maxFoodCount, int goal)
+    public GameController(int width, int height, int blockSize,
+                          int maxFoodCount, int goal, float stepTime)
             throws IllegalArgumentException {
         if (width < 0 || height < 0 || maxFoodCount <= 0 || goal <= 0) {
             throw new IllegalArgumentException();
         }
+        this.stepTime = stepTime;
+        game = new SnakeGame(width, height, maxFoodCount, goal);
+
         pane = new AnchorPane();
         pane.setMaxWidth(width * blockSize);
         pane.setMaxHeight(height * blockSize);
-        this.goal = goal;
-        View view = new View(width, height, blockSize);
-        this.pane.setManaged(false);
+        pane.setManaged(false);
 
-        fieldController = new FieldController(width, height, blockSize, maxFoodCount, goal, view);
+        View view = new View(width, height, blockSize);
 
         pauseContainer = view.initPause();
         gameOverContainer = view.initGameOver();
@@ -54,19 +60,22 @@ public class GameController {
         helpContainer = view.initHelp();
         Pane menuContainer = view.initMenu(goal);
         scoreText = view.getScoreText();
-        pane.getChildren().addAll(fieldController.getField(), pauseContainer, menuContainer,
+        fieldController = new FieldController(game.getField(), blockSize, view);
+        pane.getChildren().addAll(
+                fieldController.getFieldContainer(), pauseContainer, menuContainer,
                 gameOverContainer, gameWonContainer, helpContainer);
-        initNewGame();
     }
 
     /**
      * Sets up a new game.
      */
     public void initNewGame() {
+        game.restart();
         nextDirection = Direction.LEFT;
         stopped = false;
         busy = false;
-        fieldController.initField();
+        game.restart();
+        fieldController.drawField();
 
         pauseContainer.setVisible(false);
         gameOverContainer.setVisible(false);
@@ -108,10 +117,6 @@ public class GameController {
         return pane;
     }
 
-    public boolean isStopped() {
-        return stopped;
-    }
-
     public void setStopped(boolean stopped) {
         this.stopped = stopped;
     }
@@ -123,28 +128,29 @@ public class GameController {
         if (direction == null) {
             throw new NullPointerException();
         }
+        Field field = game.getField();
         if (!busy) {
             switch (direction) {
                 case LEFT: {
-                    if (fieldController.getPlayer().getHead().getDirection() != Direction.RIGHT) {
+                    if (field.getPlayer().getHead().getDirection() != Direction.RIGHT) {
                         nextDirection = direction;
                     }
                     break;
                 }
                 case RIGHT: {
-                    if (fieldController.getPlayer().getHead().getDirection() != Direction.LEFT) {
+                    if (field.getPlayer().getHead().getDirection() != Direction.LEFT) {
                         nextDirection = direction;
                     }
                     break;
                 }
                 case UP: {
-                    if (fieldController.getPlayer().getHead().getDirection() != Direction.DOWN) {
+                    if (field.getPlayer().getHead().getDirection() != Direction.DOWN) {
                         nextDirection = direction;
                     }
                     break;
                 }
                 case DOWN: {
-                    if (fieldController.getPlayer().getHead().getDirection() != Direction.UP) {
+                    if (field.getPlayer().getHead().getDirection() != Direction.UP) {
                         nextDirection = direction;
                     }
                     break;
@@ -156,20 +162,44 @@ public class GameController {
     /**
      * Shifts game to next state if game is in running state.
      */
-    public void gameStep() {
+    public void callNextStep() {
         if (stopped || busy) {
             return;
         }
-        fieldController.goToNextState(nextDirection);
-        fieldController.updatePlayer();
+        // if score has been updated, update food points on the field
+        if (game.makeStep(nextDirection)) {
+            fieldController.eraseFoodPoint(game.getField().getLastRemoved());
+            fieldController.drawFoodPoint(game.getField().getLastAdded());
+        }
 
-        // update view
-        scoreText.setText(String.format("%d/%d", fieldController.getScore(), goal));
+        // update score view
+        scoreText.setText(String.format("%d/%d", game.getScore(), game.getGoal()));
 
-        if (fieldController.isGameOver()) {
+        if (game.isGameOver()) {
             showGameOver();
-        } else if (fieldController.isGameWon()) {
+            return;
+        } else if (game.isGameWon()) {
             showGameWon();
+        }
+        fieldController.updatePlayer();
+    }
+
+    @Override
+    public void run() {
+        float time;
+        while (!stopped) {
+            time = System.currentTimeMillis();
+
+            Platform.runLater(this::callNextStep);
+
+            time = System.currentTimeMillis() - time;
+            if (time < stepTime) {
+                try {
+                    Thread.sleep((long) (stepTime - time));
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
         }
     }
 }

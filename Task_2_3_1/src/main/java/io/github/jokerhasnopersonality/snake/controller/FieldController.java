@@ -1,183 +1,68 @@
 package io.github.jokerhasnopersonality.snake.controller;
 
 import io.github.jokerhasnopersonality.snake.View;
-import io.github.jokerhasnopersonality.snake.model.Direction;
+import io.github.jokerhasnopersonality.snake.model.Field;
+import io.github.jokerhasnopersonality.snake.model.Point;
 import io.github.jokerhasnopersonality.snake.model.Snake;
 import io.github.jokerhasnopersonality.snake.model.SnakeBody;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import java.util.stream.Collectors;
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 /**
- * Class representing game field controller. Holds general game logic.
+ * Class representing game field controller. Controls game field view.
  */
 public class FieldController {
-    private final int width;
-    private final int height;
-    private final int blockSize;
     private final View view;
-    private final Pane field;
-    private Snake player;
+    private final Field field;
+    private final Pane fieldContainer;
     private List<Node> playerNode;
-    private boolean[][] foodField;
-    private boolean[][] barrierField;
-    private final int foodCount;
-    private int score;
-    private final int goal;
-    private boolean gameOver;
-    private boolean gameWon;
 
     /**
      * Field controller constructor.
 
-     * @param fieldWidth width of the game field
-     * @param fieldHeight height of the game field
      * @param blockSize size of a block in game field
-     * @param maxFoodCount maximum number of food points that can be
-     *                     on the field at the same time
-     * @param goal number of food points that a player needs to
-     *             collect in order to win
      * @param view View instance to draw elements on the field
      */
-    public FieldController(int fieldWidth, int fieldHeight, int blockSize,
-                           int maxFoodCount, int goal, View view)
+    public FieldController(Field field, int blockSize, View view)
             throws IllegalArgumentException, NullPointerException {
-        if (fieldWidth <= 0 || fieldHeight <= 0 || blockSize <= 0
-                || maxFoodCount <= 0 || goal <= 0) {
+        if (blockSize <= 0) {
             throw new IllegalArgumentException();
         } else if (view == null) {
             throw new NullPointerException();
         }
-        field = new AnchorPane();
-        this.width = fieldWidth;
-        this.height = fieldHeight;
-        field.setMaxWidth(width * blockSize);
-        field.setMaxHeight(height * blockSize);
-        field.setManaged(false);
-        this.foodCount = maxFoodCount;
-        this.blockSize = blockSize;
+        this.field = field;
+        fieldContainer = new AnchorPane();
+        fieldContainer.setMaxWidth(field.getWidth() * blockSize);
+        fieldContainer.setMaxHeight(field.getHeight() * blockSize);
+        fieldContainer.setManaged(false);
         this.view = view;
-        this.goal = goal;
     }
 
     /**
      * Clears the field for new game. Adds a snake, specified number
      * of food points and relevant number of barriers to field.
      */
-    public void initField() {
-        gameOver = false;
-        gameWon = false;
+    public void drawField() {
+        fieldContainer.getChildren().clear();
 
-        field.getChildren().clear();
+        fieldContainer.getChildren().addAll(field.getFoodPoints().stream()
+                .map(point -> view.drawCircle(point.getX(), point.getY(), Color.GOLD))
+                .collect(Collectors.toList()));
+        fieldContainer.getChildren().addAll(field.getBarrierPoints().stream()
+                .map(point -> view.drawBlock(point.getX(), point.getY(), Color.ROSYBROWN))
+                .collect(Collectors.toList()));
 
-        player = new Snake(10, 10, Direction.LEFT);
-        score = 0;
-
-        foodField = new boolean[width][height];
-        barrierField = new boolean[width][height];
-
-        for (int i = 0; i < foodCount; i++) {
-            field.getChildren().add(generateFood());
-        }
-        int barrierCount = (int) (foodCount * 1.5);
-        for (int i = 0; i < barrierCount; i++) {
-            field.getChildren().addAll(generateBarrier());
-        }
-
-        playerNode = drawSnake(player);
-        field.getChildren().addAll(playerNode);
+        playerNode = drawSnake(field.getPlayer());
+        fieldContainer.getChildren().addAll(playerNode);
     }
 
-    public Pane getField() {
-        return field;
-    }
-
-    public Snake getPlayer() {
-        return player;
-    }
-
-    public int getScore() {
-        return score;
-    }
-
-    /**
-     * Method for checking if it is safe to add a food point or a barrier
-     * at the specified position of the field.
-     */
-    private boolean checkPointCollision(int pointX, int pointY) {
-        SnakeBody safePosition1 = player.getNextBlock(player.getHead());
-        SnakeBody safePosition2 = player.getNextBlock(safePosition1);
-        return (safePosition1.getPoint().getX() == pointX
-                && safePosition1.getPoint().getY() == pointY)
-                || (safePosition2.getPoint().getX() == pointX
-                && safePosition2.getPoint().getY() == pointY)
-                || player.getSnake().stream().anyMatch(n ->
-                n.getPoint().getX() == pointX && n.getPoint().getY() == pointY);
-    }
-
-    /**
-     * Method for checking if snake has eaten itself.
-     */
-    private boolean checkSnakeCollision() {
-        SnakeBody head = player.getHead();
-        return player.getSnake().subList(1, player.getSnakeLength()).stream().anyMatch(n ->
-                n.getPoint().getX() == head.getPoint().getX()
-                        && n.getPoint().getY() == head.getPoint().getY());
-    }
-
-    /**
-     * Adds a single food point to the field.
-     */
-    private Node generateFood() {
-        int x;
-        int y;
-        do {
-            x = (int) (Math.random() * (width - 2)) + 1;
-            y = (int) (Math.random() * (height - 2)) + 1;
-        } while (checkPointCollision(x, y) || foodField[x][y] || barrierField[x][y]);
-        foodField[x][y] = true;
-        return view.drawCircle(Color.GOLD, x, y);
-    }
-
-    /**
-     * Adds a sequence of barrier blocks to the field.
-     */
-    private List<Node> generateBarrier() {
-        int x;
-        int y;
-        Random random = new Random();
-        do {
-            x = (int) (Math.random() * (width - 2)) + 1;
-            y = (int) (Math.random() * (height - 2)) + 1;
-        } while (checkPointCollision(x, y) || foodField[x][y] || barrierField[x][y]);
-        int length = random.nextInt(Math.min(10, Math.min(width - x, height - y))) + 1;
-        List<Node> barrier = new ArrayList<>();
-        if (random.nextBoolean()) {
-            for (int i = 0; (i < length) && !checkPointCollision(x + i, y)
-                    && !foodField[x + i][y] && !barrierField[x + i][y]; i++) {
-                barrier.add(view.drawBlock(x + i, y, Color.ROSYBROWN));
-                barrierField[x + i][y] = true;
-            }
-        } else {
-            for (int i = 0; (i < length) && !checkPointCollision(x, y + i)
-                    && !foodField[x][y + i] && !barrierField[x][y + i]; i++) {
-                barrier.add(view.drawBlock(x, y + i, Color.ROSYBROWN));
-                barrierField[x][y + i] = true;
-            }
-        }
-        return barrier;
-    }
-
-    public boolean isGameOver() {
-        return gameOver;
-    }
-
-    public boolean isGameWon() {
-        return gameWon;
+    public Pane getFieldContainer() {
+        return fieldContainer;
     }
 
     /**
@@ -190,87 +75,50 @@ public class FieldController {
         List<Node> nodes = new ArrayList<>();
         SnakeBody block = snake.getHead();
         nodes.add(view.drawSnakeHead(block.getPoint().getX(),
-                block.getPoint().getY(), block.getDirection()));
-        Direction previousDirection = block.getDirection();
+                block.getPoint().getY(),
+                DirectionManager.calculateRotateAngle(block.getDirection())));
+        SnakeBody nextBlock;
+        int rotate;
         for (int i = 1; i < snake.getSnakeLength() - 1; i++) {
             block = snake.getSnake().get(i);
-            if (block.getDirection() == previousDirection) {
+            nextBlock = snake.getSnake().get(i + 1);
+            if (block.getDirection() == nextBlock.getDirection()) {
+                rotate = DirectionManager.calculateRotateAngle(block.getDirection());
                 nodes.add(view.drawSnakeBody(block.getPoint().getX(),
-                        block.getPoint().getY(), block.getDirection()));
+                        block.getPoint().getY(), rotate));
             } else {
+                rotate = DirectionManager.calculateRotateAngle(DirectionManager.getTurnDirection(
+                        nextBlock.getDirection(), block.getDirection()));
                 nodes.add(view.drawSnakeTurn(block.getPoint().getX(),
-                        block.getPoint().getY(), block.getDirection()));
+                        block.getPoint().getY(), rotate));
             }
-            previousDirection = block.getDirection();
         }
         block = snake.getTail();
         nodes.add(view.drawSnakeTail(block.getPoint().getX(),
-                block.getPoint().getY(), block.getDirection()));
+                block.getPoint().getY(),
+                DirectionManager.calculateRotateAngle(block.getDirection())));
         return nodes;
     }
 
     /**
-     * Method for controller to shift the field to the next state.
-
-     * @param nextDirection direction that a snake should hold before shifting to next state
+     * Updates player's snake position on game field.
      */
-    public void goToNextState(Direction nextDirection) throws NullPointerException {
-        if (nextDirection == null) {
-            throw new NullPointerException();
-        }
-        player.changeDirection(nextDirection);
-        player.grow();
+    public void updatePlayer() {
+        fieldContainer.getChildren().removeAll(playerNode);
+        playerNode = drawSnake(field.getPlayer());
+        fieldContainer.getChildren().addAll(playerNode);
+    }
 
-        //check if snake has moved crossed the borders
-        int headX = player.getHead().getPoint().getX();
-        int headY = player.getHead().getPoint().getY();
-        if (headX >= width) {
-            headX = 0;
-            player.getHead().getPoint().setX(headX);
-        } else if (headX < 0) {
-            headX = width - 1;
-            player.getHead().getPoint().setX(headX);
-        }
-        if (headY >= height) {
-            headY = 0;
-            player.getHead().getPoint().setY(headY);
-        } else if (headY < 0) {
-            headY = height - 1;
-            player.getHead().getPoint().setY(headY);
-        }
-
-        // check if snake has eaten itself
-        if (checkSnakeCollision() || barrierField[headX][headY]) {
-            gameOver = true;
-            return;
-        }
-
-        int finalHeadX;
-        int finalHeadY;
-        // check if food point has been eaten
-        if (foodField[headX][headY]) {
-            finalHeadX = headX;
-            finalHeadY = headY;
-                field.getChildren().removeIf(n -> (int) (n.getLayoutX() / blockSize) == finalHeadX
-                        && (int) (n.getLayoutY() / blockSize) == finalHeadY);
-                field.getChildren().add(generateFood());
-            foodField[headX][headY] = false;
-
-            score++;
-            if (score == goal) {
-                gameWon = true;
-            }
-        } else {
-            player.getSnake().remove(player.getTail());
-        }
+    public void drawFoodPoint(Point point) {
+        fieldContainer.getChildren().add(view.drawCircle(point.getX(), point.getY(), Color.GOLD));
     }
 
     /**
-     * Updates player's snake on the field.
+     * Erases the specified food point from game field.
      */
-    public void updatePlayer() {
-        field.getChildren().removeAll(playerNode);
-        playerNode = drawSnake(player);
-        field.getChildren().addAll(playerNode);
+    public void eraseFoodPoint(Point point) {
+        fieldContainer.getChildren().removeIf(node ->
+                view.getModelCoordinates((int) node.getLayoutX()) == point.getX()
+                        && view.getModelCoordinates((int) node.getLayoutY()) == point.getY());
     }
 }

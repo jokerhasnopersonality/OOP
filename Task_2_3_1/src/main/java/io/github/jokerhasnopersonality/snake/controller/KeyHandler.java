@@ -8,22 +8,20 @@ import javafx.scene.input.KeyEvent;
  * Handler class for processing keyboard signals.
  */
 public class KeyHandler implements EventHandler<KeyEvent> {
-    private final GameThread gameThread;
     private final GameController controller;
     private Thread thread;
 
     /**
      * Key handler constructor.
 
-     * @param gameThread Game Thread instance
-     * @param thread current thread
+     * @param controller controller that controls the game
+     * @param thread current thread of running game
      */
-    public KeyHandler(GameThread gameThread, Thread thread) throws NullPointerException {
-        if (gameThread == null || thread == null) {
+    public KeyHandler(GameController controller, Thread thread) throws NullPointerException {
+        if (controller == null || thread == null) {
             throw new NullPointerException();
         }
-        this.gameThread = gameThread;
-        this.controller = gameThread.getController();
+        this.controller = controller;
         this.thread = thread;
     }
 
@@ -74,7 +72,7 @@ public class KeyHandler implements EventHandler<KeyEvent> {
                     }
                 }
                 controller.initNewGame();
-                thread = new Thread(gameThread);
+                thread = new Thread(controller);
                 thread.start();
                 break;
             }
