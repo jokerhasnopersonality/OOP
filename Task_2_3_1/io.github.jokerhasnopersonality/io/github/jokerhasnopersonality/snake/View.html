@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -191,93 +191,98 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>javafx.scene.Node</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#drawCircle(javafx.scene.paint.Color,int,int)">drawCircle</a></span>&#8203;(javafx.scene.paint.Color&nbsp;color,
-          int&nbsp;x,
-          int&nbsp;y)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#drawCircle(int,int,javafx.scene.paint.Color)">drawCircle</a></span>&#8203;(int&nbsp;x,
+          int&nbsp;y,
+          javafx.scene.paint.Color&nbsp;color)</code></th>
 <td class="colLast">
 <div class="block">Method for drawing a circle node.</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>javafx.scene.Node</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#drawImageBlock(javafx.scene.image.Image,int,int,io.github.jokerhasnopersonality.snake.model.Direction)">drawImageBlock</a></span>&#8203;(javafx.scene.image.Image&nbsp;image,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#drawImageBlock(javafx.scene.image.Image,int,int,int)">drawImageBlock</a></span>&#8203;(javafx.scene.image.Image&nbsp;image,
               int&nbsp;x,
               int&nbsp;y,
-              <a href="model/Direction.html" title="enum in io.github.jokerhasnopersonality.snake.model">Direction</a>&nbsp;direction)</code></th>
+              int&nbsp;rotate)</code></th>
 <td class="colLast">
 <div class="block">Method for drawing image block considering direction.</div>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>javafx.scene.Node</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#drawSnakeBody(int,int,io.github.jokerhasnopersonality.snake.model.Direction)">drawSnakeBody</a></span>&#8203;(int&nbsp;x,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#drawSnakeBody(int,int,int)">drawSnakeBody</a></span>&#8203;(int&nbsp;x,
              int&nbsp;y,
-             <a href="model/Direction.html" title="enum in io.github.jokerhasnopersonality.snake.model">Direction</a>&nbsp;direction)</code></th>
+             int&nbsp;rotate)</code></th>
 <td class="colLast">
 <div class="block">Method for drawing snake body block.</div>
 </td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>javafx.scene.Node</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#drawSnakeHead(int,int,io.github.jokerhasnopersonality.snake.model.Direction)">drawSnakeHead</a></span>&#8203;(int&nbsp;x,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#drawSnakeHead(int,int,int)">drawSnakeHead</a></span>&#8203;(int&nbsp;x,
              int&nbsp;y,
-             <a href="model/Direction.html" title="enum in io.github.jokerhasnopersonality.snake.model">Direction</a>&nbsp;direction)</code></th>
+             int&nbsp;rotate)</code></th>
 <td class="colLast">
 <div class="block">Method for drawing snake head.</div>
 </td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>javafx.scene.Node</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#drawSnakeTail(int,int,io.github.jokerhasnopersonality.snake.model.Direction)">drawSnakeTail</a></span>&#8203;(int&nbsp;x,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#drawSnakeTail(int,int,int)">drawSnakeTail</a></span>&#8203;(int&nbsp;x,
              int&nbsp;y,
-             <a href="model/Direction.html" title="enum in io.github.jokerhasnopersonality.snake.model">Direction</a>&nbsp;direction)</code></th>
+             int&nbsp;rotate)</code></th>
 <td class="colLast">
 <div class="block">Method for drawing snake tail.</div>
 </td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>javafx.scene.Node</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#drawSnakeTurn(int,int,io.github.jokerhasnopersonality.snake.model.Direction)">drawSnakeTurn</a></span>&#8203;(int&nbsp;x,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#drawSnakeTurn(int,int,int)">drawSnakeTurn</a></span>&#8203;(int&nbsp;x,
              int&nbsp;y,
-             <a href="model/Direction.html" title="enum in io.github.jokerhasnopersonality.snake.model">Direction</a>&nbsp;direction)</code></th>
+             int&nbsp;rotate)</code></th>
 <td class="colLast">
 <div class="block">Method for drawing body block of snake that changes direction.</div>
 </td>
 </tr>
 <tr id="i7" class="rowColor">
+<td class="colFirst"><code>int</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getModelCoordinates(int)">getModelCoordinates</a></span>&#8203;(int&nbsp;coordinate)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>javafx.scene.text.Text</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getScoreText()">getScoreText</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>javafx.scene.layout.Pane</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#initGameOver()">initGameOver</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Initiates gameOver GUI component.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>javafx.scene.layout.Pane</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#initGameWon()">initGameWon</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Initiates win scenario GUI component.</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>javafx.scene.layout.Pane</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#initHelp()">initHelp</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Initiates help instructions GUI component.</div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>javafx.scene.layout.Pane</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#initMenu(int)">initMenu</a></span>&#8203;(int&nbsp;goal)</code></th>
 <td class="colLast">
 <div class="block">Initiates menu GUI component.</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>javafx.scene.layout.Pane</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#initPause()">initPause</a></span>()</code></th>
 <td class="colLast">
@@ -336,15 +341,15 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a id="drawCircle(javafx.scene.paint.Color,int,int)">
+<a id="drawCircle(int,int,javafx.scene.paint.Color)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>drawCircle</h4>
-<pre class="methodSignature">public&nbsp;javafx.scene.Node&nbsp;drawCircle&#8203;(javafx.scene.paint.Color&nbsp;color,
-                                    int&nbsp;x,
-                                    int&nbsp;y)</pre>
+<pre class="methodSignature">public&nbsp;javafx.scene.Node&nbsp;drawCircle&#8203;(int&nbsp;x,
+                                    int&nbsp;y,
+                                    javafx.scene.paint.Color&nbsp;color)</pre>
 <div class="block">Method for drawing a circle node.</div>
 </li>
 </ul>
@@ -360,7 +365,7 @@ extends java.lang.Object</pre>
 <div class="block">Method for drawing a block node.</div>
 </li>
 </ul>
-<a id="drawSnakeHead(int,int,io.github.jokerhasnopersonality.snake.model.Direction)">
+<a id="drawSnakeHead(int,int,int)">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -368,11 +373,11 @@ extends java.lang.Object</pre>
 <h4>drawSnakeHead</h4>
 <pre class="methodSignature">public&nbsp;javafx.scene.Node&nbsp;drawSnakeHead&#8203;(int&nbsp;x,
                                        int&nbsp;y,
-                                       <a href="model/Direction.html" title="enum in io.github.jokerhasnopersonality.snake.model">Direction</a>&nbsp;direction)</pre>
+                                       int&nbsp;rotate)</pre>
 <div class="block">Method for drawing snake head.</div>
 </li>
 </ul>
-<a id="drawSnakeBody(int,int,io.github.jokerhasnopersonality.snake.model.Direction)">
+<a id="drawSnakeBody(int,int,int)">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -380,11 +385,11 @@ extends java.lang.Object</pre>
 <h4>drawSnakeBody</h4>
 <pre class="methodSignature">public&nbsp;javafx.scene.Node&nbsp;drawSnakeBody&#8203;(int&nbsp;x,
                                        int&nbsp;y,
-                                       <a href="model/Direction.html" title="enum in io.github.jokerhasnopersonality.snake.model">Direction</a>&nbsp;direction)</pre>
+                                       int&nbsp;rotate)</pre>
 <div class="block">Method for drawing snake body block.</div>
 </li>
 </ul>
-<a id="drawSnakeTail(int,int,io.github.jokerhasnopersonality.snake.model.Direction)">
+<a id="drawSnakeTail(int,int,int)">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -392,11 +397,11 @@ extends java.lang.Object</pre>
 <h4>drawSnakeTail</h4>
 <pre class="methodSignature">public&nbsp;javafx.scene.Node&nbsp;drawSnakeTail&#8203;(int&nbsp;x,
                                        int&nbsp;y,
-                                       <a href="model/Direction.html" title="enum in io.github.jokerhasnopersonality.snake.model">Direction</a>&nbsp;direction)</pre>
+                                       int&nbsp;rotate)</pre>
 <div class="block">Method for drawing snake tail.</div>
 </li>
 </ul>
-<a id="drawSnakeTurn(int,int,io.github.jokerhasnopersonality.snake.model.Direction)">
+<a id="drawSnakeTurn(int,int,int)">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -404,11 +409,11 @@ extends java.lang.Object</pre>
 <h4>drawSnakeTurn</h4>
 <pre class="methodSignature">public&nbsp;javafx.scene.Node&nbsp;drawSnakeTurn&#8203;(int&nbsp;x,
                                        int&nbsp;y,
-                                       <a href="model/Direction.html" title="enum in io.github.jokerhasnopersonality.snake.model">Direction</a>&nbsp;direction)</pre>
+                                       int&nbsp;rotate)</pre>
 <div class="block">Method for drawing body block of snake that changes direction.</div>
 </li>
 </ul>
-<a id="drawImageBlock(javafx.scene.image.Image,int,int,io.github.jokerhasnopersonality.snake.model.Direction)">
+<a id="drawImageBlock(javafx.scene.image.Image,int,int,int)">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -417,7 +422,7 @@ extends java.lang.Object</pre>
 <pre class="methodSignature">public&nbsp;javafx.scene.Node&nbsp;drawImageBlock&#8203;(javafx.scene.image.Image&nbsp;image,
                                         int&nbsp;x,
                                         int&nbsp;y,
-                                        <a href="model/Direction.html" title="enum in io.github.jokerhasnopersonality.snake.model">Direction</a>&nbsp;direction)</pre>
+                                        int&nbsp;rotate)</pre>
 <div class="block">Method for drawing image block considering direction.</div>
 </li>
 </ul>
@@ -473,11 +478,20 @@ extends java.lang.Object</pre>
 <a id="initHelp()">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>initHelp</h4>
 <pre class="methodSignature">public&nbsp;javafx.scene.layout.Pane&nbsp;initHelp()</pre>
 <div class="block">Initiates help instructions GUI component.</div>
+</li>
+</ul>
+<a id="getModelCoordinates(int)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>getModelCoordinates</h4>
+<pre class="methodSignature">public&nbsp;int&nbsp;getModelCoordinates&#8203;(int&nbsp;coordinate)</pre>
 </li>
 </ul>
 </li>
