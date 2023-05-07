@@ -1,8 +1,6 @@
 package io.github.jokerhasnopersonality.snake;
 
 import java.util.Objects;
-
-import io.github.jokerhasnopersonality.snake.model.Direction;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -48,11 +46,11 @@ public class View {
         foodSize = 25;
 
         head = new Image(
-                Objects.requireNonNull(View.class.getResourceAsStream("/images/snake_head1.png")));
+                Objects.requireNonNull(View.class.getResourceAsStream("/images/snake_head2.png")));
         body = new Image(
-                Objects.requireNonNull(View.class.getResourceAsStream("/images/snake_body1.png")));
+                Objects.requireNonNull(View.class.getResourceAsStream("/images/snake_body2.png")));
         tail = new Image(
-                Objects.requireNonNull(View.class.getResourceAsStream("/images/snake_tail.png")));
+                Objects.requireNonNull(View.class.getResourceAsStream("/images/snake_tail2.png")));
         turn = new Image(
                 Objects.requireNonNull(View.class.getResourceAsStream("/images/snake_turn2.png")));
     }
@@ -60,7 +58,7 @@ public class View {
     /**
      * Method for drawing a circle node.
      */
-    public Node drawCircle(Color color, int x, int y) {
+    public Node drawCircle(int x, int y, Color color) {
         int r = blockSize / 2;
         Circle circle = new Circle(r, r, (int) (foodSize / 2));
         circle.setLayoutX(blockSize * x);
@@ -87,61 +85,40 @@ public class View {
     /**
      * Method for drawing snake head.
      */
-    public Node drawSnakeHead(int x, int y, Direction direction) {
-        return drawImageBlock(head, x, y, direction);
+    public Node drawSnakeHead(int x, int y, int rotate) {
+        return drawImageBlock(head, x, y, rotate);
     }
 
     /**
      * Method for drawing snake body block.
      */
-    public Node drawSnakeBody(int x, int y, Direction direction) {
-        return drawImageBlock(body, x, y, direction);
+    public Node drawSnakeBody(int x, int y, int rotate) {
+        return drawImageBlock(body, x, y, rotate);
     }
 
     /**
      * Method for drawing snake tail.
      */
-    public Node drawSnakeTail(int x, int y, Direction direction) {
-        return drawImageBlock(tail, x, y, direction);
+    public Node drawSnakeTail(int x, int y, int rotate) {
+        return drawImageBlock(tail, x, y, rotate);
     }
 
     /**
      * Method for drawing body block of snake that changes direction.
      */
-    public Node drawSnakeTurn(int x, int y, Direction direction) {
-        return drawImageBlock(turn, x, y, direction);
+    public Node drawSnakeTurn(int x, int y, int rotate) {
+        return drawImageBlock(turn, x, y, rotate);
     }
 
     /**
      * Method for drawing image block considering direction.
      */
-    public Node drawImageBlock(Image image, int x, int y, Direction direction) {
-        Rectangle rectangle = new Rectangle(x * blockSize, y * blockSize,
-                blockSize - 2, blockSize - 2);
-        rectangle.setFill(Color.PALETURQUOISE);
-        rectangle.setStroke(Color.PALETURQUOISE.darker());
-        rectangle.setStrokeWidth(3);
+    public Node drawImageBlock(Image image, int x, int y, int rotate) {
         Node node = new ImageView(image);
-        switch (direction) {
-            case LEFT: {
-                node.setRotate(90);
-                break;
-            }
-            case RIGHT: {
-                node.setRotate(-90);
-                break;
-            }
-            case UP: {
-                node.setRotate(180);
-                break;
-            }
-        }
-        //rectangle.setLayoutX(x * blockSize);
-        //rectangle.setLayoutY(y * blockSize);
+        node.setRotate(rotate);
         node.setLayoutX(x * blockSize);
         node.setLayoutY(y * blockSize);
-        return rectangle;
-        //return node;
+        return node;
     }
 
     /**
@@ -285,5 +262,9 @@ public class View {
         helpContainer.getChildren().addAll(background, menu);
 
         return helpContainer;
+    }
+
+    public int getModelCoordinates(int coordinate) {
+        return coordinate / blockSize;
     }
 }
