@@ -72,12 +72,12 @@ public class SnakeGame {
      * @param nextDirection direction that a snake should hold before shifting to next state
      */
     public boolean makeStep(Direction nextDirection)
-            throws NullPointerException, IllegalStateException {
+            throws IllegalArgumentException {
         if (gameOver || gameWon) {
             return false;
         }
         if (nextDirection == null) {
-            throw new NullPointerException();
+            throw new IllegalArgumentException();
         }
         boolean scoreUpdated = false;
         Snake player = field.getPlayer();
