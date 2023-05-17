@@ -14,7 +14,7 @@
 <!--[if IE]>
 <script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
 <![endif]-->
-<script type="text/javascript" src="../../../../../../jquery/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="../../../../../../jquery/jquery-3.6.1.min.js"></script>
 <script type="text/javascript" src="../../../../../../jquery/jquery-ui.min.js"></script>
 </head>
 <body>
@@ -344,15 +344,13 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>makeStep</h4>
 <pre class="methodSignature">public&nbsp;boolean&nbsp;makeStep&#8203;(<a href="Direction.html" title="enum in io.github.jokerhasnopersonality.snake.model">Direction</a>&nbsp;nextDirection)
-                 throws java.lang.NullPointerException,
-                        java.lang.IllegalStateException</pre>
+                 throws java.lang.IllegalArgumentException</pre>
 <div class="block">Method for controller to shift the game to the next state.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>nextDirection</code> - direction that a snake should hold before shifting to next state</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.lang.NullPointerException</code></dd>
-<dd><code>java.lang.IllegalStateException</code></dd>
+<dd><code>java.lang.IllegalArgumentException</code></dd>
 </dl>
 </li>
 </ul>
