@@ -1,0 +1,31 @@
+plugins {
+    id 'java'
+    id 'jacoco'
+    id 'groovy'
+}
+
+group 'io.github.jokerhasnopersonality'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compileOnly 'org.projectlombok:lombok:1.18.26'
+    annotationProcessor 'org.projectlombok:lombok:1.18.26'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.2'
+    implementation 'org.codehaus.groovy:groovy-all:3.0.16'
+    implementation 'org.eclipse.jgit:org.eclipse.jgit:6.5.0.202303070854-r'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+jacocoTestReport {
+    reports {
+        xml.required = true
+    }
+}
