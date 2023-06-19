@@ -1,10 +1,12 @@
 package io.github.jokerhasnopersonality.model;
 
+import java.util.List;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.util.List;
-
+/**
+ * Class representing a group of students.
+ */
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class Group extends GroovyConfigurable {
