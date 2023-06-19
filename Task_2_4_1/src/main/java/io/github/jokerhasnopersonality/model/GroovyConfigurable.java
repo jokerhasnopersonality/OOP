@@ -6,22 +6,32 @@ import groovy.lang.GroovyObjectSupport;
 import groovy.lang.GroovyShell;
 import groovy.lang.MetaProperty;
 import groovy.util.DelegatingScript;
-import io.github.jokerhasnopersonality.Main;
+import io.github.jokerhasnopersonality.TaskInspector;
+import java.lang.reflect.ParameterizedType;
+import java.net.URI;
+import java.nio.file.Paths;
+import java.util.Collection;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.SneakyThrows;
 import org.codehaus.groovy.control.CompilerConfiguration;
 
-import java.lang.reflect.ParameterizedType;
-import java.net.URI;
-import java.nio.file.Paths;
-import java.util.Collection;
-
+/**
+ * Basic DSL class for handling groovy objects.
+ */
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class GroovyConfigurable extends GroovyObjectSupport {
     private URI scriptPath;
 
+    /**
+     * Method is used when groovy encounters a
+     * method call that is missing from the object.
+
+     * @param name name of the method that was
+     *             tried to be called
+     * @param args list of failed method's arguments
+     */
     @SneakyThrows
     public void methodMissing(String name, Object args) {
         MetaProperty metaProperty = getMetaClass().getMetaProperty(name);
@@ -42,6 +52,12 @@ public class GroovyConfigurable extends GroovyObjectSupport {
         }
     }
 
+    /**
+     * Method for import other objects like groups
+     * or tasks from other groovy files.
+
+     * @param path relative path to groovy file
+     */
     @SneakyThrows
     public void include(String path) {
         URI uri = Paths.get(scriptPath).getParent().resolve(path).toUri();
@@ -49,17 +65,23 @@ public class GroovyConfigurable extends GroovyObjectSupport {
         postProcess();
     }
 
+    /**
+     * Runs groovy script from the given URI.
+     */
     @SneakyThrows
     public void runFrom(URI uri) {
         this.scriptPath = uri;
         CompilerConfiguration cc = new CompilerConfiguration();
         cc.setScriptBaseClass(DelegatingScript.class.getName());
-        GroovyShell sh = new GroovyShell(Main.class.getClassLoader(), new Binding(), cc);
-        DelegatingScript script = (DelegatingScript)sh.parse(uri);
+        GroovyShell sh = new GroovyShell(TaskInspector.class.getClassLoader(), new Binding(), cc);
+        DelegatingScript script = (DelegatingScript) sh.parse(uri);
         script.setDelegate(this);
         script.run();
     }
 
+    /**
+     * Method for post processing for identifying lists of objects.
+     */
     @SneakyThrows
     public void postProcess() {
         for (MetaProperty metaProperty : getMetaClass().getProperties()) {
